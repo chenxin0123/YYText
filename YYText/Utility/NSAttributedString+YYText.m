@@ -770,6 +770,7 @@ return style. _attr_;
     [self yy_setAttribute:name value:value range:NSMakeRange(0, self.length)];
 }
 
+///设置属性 如果value传nil或者NSNull则移除属性!
 - (void)yy_setAttribute:(NSString *)name value:(id)value range:(NSRange)range {
     if (!name || [NSNull isEqual:name]) return;
     if (value && ![NSNull isEqual:value]) [self addAttribute:name value:value range:range];
@@ -781,7 +782,7 @@ return style. _attr_;
 }
 
 #pragma mark - Property Setter
-
+//!
 - (void)setYy_font:(UIFont *)font {
     /*
      In iOS7 and later, UIFont is toll-free bridged to CTFontRef,
@@ -968,7 +969,7 @@ return style. _attr_;
 }
 
 #pragma mark - Range Setter
-
+//!
 - (void)yy_setFont:(UIFont *)font range:(NSRange)range {
     /*
      In iOS7 and later, UIFont is toll-free bridged to CTFontRef,

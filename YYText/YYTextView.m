@@ -23,7 +23,9 @@
 #import "UIPasteboard+YYText.h"
 #import "UIView+YYText.h"
 
-
+/**!
+ *    获取当前系统版本
+ */
 static double _YYDeviceSystemVersion() {
     static double version;
     static dispatch_once_t onceToken;
@@ -33,22 +35,23 @@ static double _YYDeviceSystemVersion() {
     return version;
 }
 
+//!
 #ifndef kSystemVersion
 #define kSystemVersion _YYDeviceSystemVersion()
 #endif
-
+//!
 #ifndef kiOS6Later
 #define kiOS6Later (kSystemVersion >= 6)
 #endif
-
+//!
 #ifndef kiOS7Later
 #define kiOS7Later (kSystemVersion >= 7)
 #endif
-
+//!
 #ifndef kiOS8Later
 #define kiOS8Later (kSystemVersion >= 8)
 #endif
-
+//!
 #ifndef kiOS9Later
 #define kiOS9Later (kSystemVersion >= 9)
 #endif
@@ -70,7 +73,7 @@ static double _YYDeviceSystemVersion() {
 #define kDefaultInset UIEdgeInsetsMake(6, 4, 6, 4)
 #define kDefaultVerticalInset UIEdgeInsetsMake(4, 6, 4, 6)
 
-
+//!
 NSString *const YYTextViewTextDidBeginEditingNotification = @"YYTextViewTextDidBeginEditing";
 NSString *const YYTextViewTextDidChangeNotification = @"YYTextViewTextDidChange";
 NSString *const YYTextViewTextDidEndEditingNotification = @"YYTextViewTextDidEndEditing";

@@ -1,5 +1,5 @@
 //
-//  YYWeakProxy.m
+//  YYWeakProxy.m!
 //  YYKit <https://github.com/ibireme/YYKit>
 //
 //  Created by ibireme on 14/10/18.
@@ -23,6 +23,7 @@
     return [[YYWeakProxy alloc] initWithTarget:target];
 }
 
+///将消息传给target
 - (id)forwardingTargetForSelector:(SEL)selector {
     return _target;
 }
@@ -68,6 +69,11 @@
     return [_target conformsToProtocol:aProtocol];
 }
 
+/**
+ *    表示是否不是继承自NSObject
+ *
+ *    @return 不是则返回YES
+ */
 - (BOOL)isProxy {
     return YES;
 }

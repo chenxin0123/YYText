@@ -205,7 +205,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 
 @property (nullable, nonatomic, strong) UIColor *color; ///< shadow color
 @property (nonatomic) CGSize offset;                    ///< shadow offset
-@property (nonatomic) CGFloat radius;                   ///< shadow blur radius
+@property (nonatomic) CGFloat radius;                   ///< shadow blur radius!
 @property (nonatomic) CGBlendMode blendMode;            ///< shadow blend mode
 @property (nullable, nonatomic, strong) YYTextShadow *subShadow;  ///< a sub shadow which will be added above the parent shadow
 

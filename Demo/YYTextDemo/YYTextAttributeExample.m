@@ -19,6 +19,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     __weak typeof(self) _self = self;
+    //调试开关
     [YYTextExampleHelper addDebugOptionToViewController:self];
     
     NSMutableAttributedString *text = [NSMutableAttributedString new];
@@ -29,8 +30,8 @@
         one.yy_color = [UIColor whiteColor];
         YYTextShadow *shadow = [YYTextShadow new];
         shadow.color = [UIColor colorWithWhite:0.000 alpha:0.490];
-        shadow.offset = CGSizeMake(0, 1);
-        shadow.radius = 5;
+        shadow.offset = CGSizeMake(5, 5);
+        shadow.radius = 10;
         one.yy_textShadow = shadow;
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
@@ -244,6 +245,7 @@
     };
 }
 
+//!
 - (NSAttributedString *)padding {
     NSMutableAttributedString *pad = [[NSMutableAttributedString alloc] initWithString:@"\n\n"];
     pad.yy_font = [UIFont systemFontOfSize:4];

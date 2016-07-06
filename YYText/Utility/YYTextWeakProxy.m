@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextWeakProxy.m
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -10,7 +10,6 @@
 //
 
 #import "YYTextWeakProxy.h"
-
 
 @implementation YYTextWeakProxy
 

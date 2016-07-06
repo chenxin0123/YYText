@@ -1,5 +1,5 @@
 //
-//  YYFPSLabel.m
+//  YYFPSLabel.m!
 //  YYKitExample
 //
 //  Created by ibireme on 15/9/3.
@@ -47,31 +47,41 @@
     [_link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSRunLoopCommonModes];
     return self;
 }
-
+//!
 - (void)dealloc {
     [_link invalidate];
 }
 
+/**!
+ *    [self sizeToFit]调用了这个方法
+ */
 - (CGSize)sizeThatFits:(CGSize)size {
+    [self intrinsicContentSize];
     return kSize;
 }
 
+///每一帧掉一次
 - (void)tick:(CADisplayLink *)link {
     if (_lastTime == 0) {
         _lastTime = link.timestamp;
         return;
     }
     
+    //累加帧数
     _count++;
     NSTimeInterval delta = link.timestamp - _lastTime;
+    //不够一秒返回
     if (delta < 1) return;
+    //重置_lastTime
     _lastTime = link.timestamp;
+    //计算帧率
     float fps = _count / delta;
+    //重置count
     _count = 0;
-    
+    //progress用来计算数字颜色
     CGFloat progress = fps / 60.0;
     UIColor *color = [UIColor colorWithHue:0.27 * (progress - 0.2) saturation:1 brightness:0.9 alpha:1];
-    
+    //round 四舍五入
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d FPS",(int)round(fps)]];
     [text yy_setColor:color range:NSMakeRange(0, text.length - 3)];
     [text yy_setColor:[UIColor whiteColor] range:NSMakeRange(text.length - 3, 3)];

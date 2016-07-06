@@ -15,6 +15,7 @@ static BOOL DebugEnabled = NO;
 
 @implementation YYTextExampleHelper
 
+//!
 + (void)addDebugOptionToViewController:(UIViewController *)vc {
     UISwitch *switcher = [UISwitch new];
     [switcher.layer setValue:@(0.8) forKeyPath:@"transform.scale"];
@@ -34,6 +35,7 @@ static BOOL DebugEnabled = NO;
     vc.navigationItem.rightBarButtonItem = item;
 }
 
+//!
 + (void)setDebug:(BOOL)debug {
     YYTextDebugOption *debugOptions = [YYTextDebugOption new];
     if (debug) {
@@ -47,7 +49,7 @@ static BOOL DebugEnabled = NO;
     [YYTextDebugOption setSharedDebugOption:debugOptions];
     DebugEnabled = debug;
 }
-
+//!
 + (BOOL)isDebug {
     return DebugEnabled;
 }

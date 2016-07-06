@@ -757,6 +757,7 @@ NS_ASSUME_NONNULL_BEGIN
  @since CoreText:3.2  UIKit:6.0  YYText:6.0
  */
 @property (nullable, nonatomic, strong, readwrite) UIFont *yy_font;
+
 - (void)yy_setFont:(nullable UIFont *)font range:(NSRange)range;
 
 /**

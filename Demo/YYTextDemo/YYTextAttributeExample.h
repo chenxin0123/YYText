@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**!
+ *    Text Attributes 1 UIViewController
+ */
 @interface YYTextAttributeExample : UIViewController
 
 @end

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+/**!
+ *    : UITableViewController
+ */
 @interface YYTextExample : UITableViewController
 
 @end

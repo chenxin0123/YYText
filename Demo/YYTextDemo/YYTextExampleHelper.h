@@ -10,7 +10,13 @@
 
 @interface YYTextExampleHelper : NSObject
 
+/**!
+ *    在vc的导航栏右边加上一个uiswitch 用于打开关闭调试开关 打开则显示辅助线
+ *
+ *    @param vc vc
+ */
 + (void)addDebugOptionToViewController:(UIViewController *)vc;
+
 + (void)setDebug:(BOOL)debug;
 + (BOOL)isDebug;
 @end
