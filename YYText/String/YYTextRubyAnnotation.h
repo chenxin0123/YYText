@@ -1,5 +1,5 @@
 //
-//  YYTextRubyAnnotation.h
+//  YYTextRubyAnnotation.h!
 //  YYText <https://github.com/ibireme/YYText>
 //
 //  Created by ibireme on 15/4/24.
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
         /// add to attributed string
         CFRelease(ctRuby);
      }
- 
+ CTRubyAnnotation用来在某些亚洲人的脚本中展示字符发音的
  */
 @interface YYTextRubyAnnotation : NSObject <NSCopying, NSCoding>
 

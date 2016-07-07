@@ -24,20 +24,22 @@
     
     NSMutableAttributedString *text = [NSMutableAttributedString new];
     
-    {
+    {//!
         NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Shadow"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor whiteColor];
+        
         YYTextShadow *shadow = [YYTextShadow new];
         shadow.color = [UIColor colorWithWhite:0.000 alpha:0.490];
         shadow.offset = CGSizeMake(5, 5);
         shadow.radius = 10;
+        //YYTextShadowAttributeName
         one.yy_textShadow = shadow;
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
     }
     
-    {
+    {//!
         NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Inner Shadow"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor whiteColor];
@@ -45,22 +47,23 @@
         shadow.color = [UIColor colorWithWhite:0.000 alpha:0.40];
         shadow.offset = CGSizeMake(0, 1);
         shadow.radius = 1;
+        //YYTextInnerShadowAttributeName
         one.yy_textInnerShadow = shadow;
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
     }
     
-    {
+    {//!
         NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Multiple Shadows"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor colorWithRed:1.000 green:0.795 blue:0.014 alpha:1.000];
         
         YYTextShadow *shadow = [YYTextShadow new];
-        shadow.color = [UIColor colorWithWhite:0.000 alpha:0.20];
+        shadow.color = [UIColor redColor];//[UIColor colorWithWhite:0.000 alpha:0.20];
         shadow.offset = CGSizeMake(0, -1);
         shadow.radius = 1.5;
         YYTextShadow *subShadow = [YYTextShadow new];
-        subShadow.color = [UIColor colorWithWhite:1 alpha:0.99];
+        subShadow.color = [UIColor yellowColor];//[UIColor colorWithWhite:1 alpha:0.99];
         subShadow.offset = CGSizeMake(0, 1);
         subShadow.radius = 1.5;
         shadow.subShadow = subShadow;
@@ -76,7 +79,7 @@
         [text appendAttributedString:[self padding]];
     }
     
-    {
+    {//!
         NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Background Image"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor colorWithRed:1.000 green:0.795 blue:0.014 alpha:1.000];
@@ -96,24 +99,27 @@
             CGContextStrokePath(context);
         }];
         one.yy_color = [UIColor colorWithPatternImage:background];
-        
+        //图片平铺效果
+        self.view.backgroundColor = [UIColor colorWithPatternImage:background];
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
     }
     
-    {
+    {//!
         NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Border"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor colorWithRed:1.000 green:0.029 blue:0.651 alpha:1.000];
         
         YYTextBorder *border = [YYTextBorder new];
+        //border.fillColor = [UIColor redColor];
         border.strokeColor = [UIColor colorWithRed:1.000 green:0.029 blue:0.651 alpha:1.000];
         border.strokeWidth = 3;
-        border.lineStyle = YYTextLineStylePatternCircleDot;
+        border.lineStyle = YYTextLineStylePatternDash;
         border.cornerRadius = 3;
         border.insets = UIEdgeInsetsMake(0, -4, 0, -4);
+        //YYTextBackgroundBorderAttributeName
         one.yy_textBackgroundBorder = border;
-        
+//        one.yy_textBorder = border;
         [text appendAttributedString:[self padding]];
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
@@ -122,8 +128,9 @@
         [text appendAttributedString:[self padding]];
     }
     
-    {
-        NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Link"];
+    {//!
+        
+        NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Linlllllllllllllllllllll\nk"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_underlineStyle = NSUnderlineStyleSingle;
         
@@ -149,14 +156,15 @@
                                 color:[UIColor colorWithRed:0.093 green:0.492 blue:1.000 alpha:1.000]
                       backgroundColor:[UIColor colorWithWhite:0.000 alpha:0.220]
                             tapAction:^(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect){
+                                //加上\n rect的宽度就变成320
                                 [_self showMessage:[NSString stringWithFormat:@"Tap: %@",[text.string substringWithRange:range]]];
                             }];
-        
+        //NSFontAttributeName
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
     }
     
-    {
+    {//!
         NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Another Link"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor redColor];

@@ -1,5 +1,5 @@
 //
-//  YYTextRubyAnnotation.m
+//  YYTextRubyAnnotation.m!
 //  YYText <https://github.com/ibireme/YYText>
 //
 //  Created by ibireme on 15/4/24.
@@ -12,7 +12,7 @@
 #import "YYTextRubyAnnotation.h"
 
 @implementation YYTextRubyAnnotation
-
+//!
 - (instancetype)init {
     self = super.init;
     self.alignment = kCTRubyAlignmentAuto;
@@ -21,6 +21,7 @@
     return self;
 }
 
+//!
 + (instancetype)rubyWithCTRubyRef:(CTRubyAnnotationRef)ctRuby {
     if (!ctRuby) return nil;
     YYTextRubyAnnotation *one = [self new];
@@ -33,7 +34,7 @@
     one.textInline = (__bridge NSString *)(CTRubyAnnotationGetTextForPosition(ctRuby, kCTRubyPositionInline));
     return one;
 }
-
+//!
 - (CTRubyAnnotationRef)CTRubyAnnotation CF_RETURNS_RETAINED {
     if (((long)CTRubyAnnotationCreate + 1) == 1) return NULL; // system not support
     
@@ -45,7 +46,7 @@
     CTRubyAnnotationRef ruby = CTRubyAnnotationCreate(_alignment, _overhang, _sizeFactor, text);
     return ruby;
 }
-
+//!
 - (id)copyWithZone:(NSZone *)zone {
     YYTextRubyAnnotation *one = [self.class new];
     one.alignment = _alignment;
@@ -57,7 +58,7 @@
     one.textInline = _textInline;
     return one;
 }
-
+//!
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:@(_alignment) forKey:@"alignment"];
     [aCoder encodeObject:@(_overhang) forKey:@"overhang"];
@@ -67,7 +68,7 @@
     [aCoder encodeObject:_textInterCharacter forKey:@"textInterCharacter"];
     [aCoder encodeObject:_textInline forKey:@"textInline"];
 }
-
+//!
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [self init];
     _alignment = ((NSNumber *)[aDecoder decodeObjectForKey:@"alignment"]).intValue;

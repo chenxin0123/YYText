@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
  
  @discussion When the layer need update it's contents, it will ask the delegate 
  for a async display task to render the contents in a background queue.
+ 
+ YYLabel的+ (Class)layerClass返回YYTextAsyncLayer
+ 
  */
 @interface YYTextAsyncLayer : CALayer
 /// Whether the render code is executed in background. Default is YES.
@@ -31,6 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The YYTextAsyncLayer's delegate protocol. The delegate of the YYTextAsyncLayer (typically a UIView)
  must implements the method in this protocol.
+ 
+ YYLable实现了该协议
+ 
  */
 @protocol YYTextAsyncLayerDelegate <NSObject>
 @required

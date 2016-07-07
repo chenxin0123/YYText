@@ -359,11 +359,16 @@ dispatch_semaphore_signal(_lock);
     YYTextContainer *container = [YYTextContainer containerWithSize:size];
     return [self layoutWithContainer:container text:text];
 }
-
+//!
 + (YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text {
     return [self layoutWithContainer:container text:text range:NSMakeRange(0, text.length)];
 }
 
+/**
+ *  CT的核心代码
+ *
+ *  @param container 容器
+ */
 + (YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text range:(NSRange)range {
     YYTextLayout *layout = NULL;
     CGPathRef cgPath = nil;
@@ -468,12 +473,14 @@ dispatch_semaphore_signal(_lock);
         frameAttrs[(id)kCTFrameProgressionAttributeName] = @(kCTFrameProgressionRightToLeft);
     }
     
-    // create CoreText objects
+    // create CoreText objects 通过CFAttributedString进行初始化，它作为CTFrame对象的生产工厂，负责根据path生产对应的CTFrame
     ctSetter = CTFramesetterCreateWithAttributedString((CFTypeRef)text);
     if (!ctSetter) goto fail;
+    //CTFrame是可以通过CTFrameDraw函数直接绘制到context上的，当然你可以在绘制之前，操作CTFrame中的CTLine，进行一些参数的微调
     ctFrame = CTFramesetterCreateFrame(ctSetter, YYTextCFRangeFromNSRange(range), cgPath, (CFTypeRef)frameAttrs);
     if (!ctFrame) goto fail;
     lines = [NSMutableArray new];
+    // 可以看做Core Text绘制中的一行的对象 通过它可以获得当前行的line ascent,line descent ,line leading,还可以获得Line下的所有Glyph Runs
     ctLines = CTFrameGetLines(ctFrame);
     lineCount = CFArrayGetCount(ctLines);
     if (lineCount > 0) {
@@ -497,6 +504,7 @@ dispatch_semaphore_signal(_lock);
     NSUInteger lineCurrentIdx = 0;
     for (NSUInteger i = 0; i < lineCount; i++) {
         CTLineRef ctLine = CFArrayGetValueAtIndex(ctLines, i);
+        //CTRun 或者叫做 Glyph Run，是一组共享想相同attributes（属性）的字形的集合体
         CFArrayRef ctRuns = CTLineGetGlyphRuns(ctLine);
         if (!ctRuns || CFArrayGetCount(ctRuns) == 0) continue;
         

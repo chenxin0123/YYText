@@ -671,7 +671,7 @@ return style. _attr_;
     
     return atr;
 }
-
+//!
 - (NSRange)yy_rangeOfAll {
     return NSMakeRange(0, self.length);
 }
@@ -799,7 +799,7 @@ return style. _attr_;
 - (void)setYy_kern:(NSNumber *)kern {
     [self yy_setKern:kern range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_color:(UIColor *)color {
     [self yy_setColor:color range:NSMakeRange(0, self.length)];
 }
@@ -939,27 +939,27 @@ return style. _attr_;
 - (void)setYy_tabStops:(NSArray *)tabStops {
     [self yy_setTabStops:tabStops range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_textShadow:(YYTextShadow *)textShadow {
     [self yy_setTextShadow:textShadow range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_textInnerShadow:(YYTextShadow *)textInnerShadow {
     [self yy_setTextInnerShadow:textInnerShadow range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_textUnderline:(YYTextDecoration *)textUnderline {
     [self yy_setTextUnderline:textUnderline range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_textStrikethrough:(YYTextDecoration *)textStrikethrough {
     [self yy_setTextStrikethrough:textStrikethrough range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_textBorder:(YYTextBorder *)textBorder {
     [self yy_setTextBorder:textBorder range:NSMakeRange(0, self.length)];
 }
-
+//!
 - (void)setYy_textBackgroundBorder:(YYTextBorder *)textBackgroundBorder {
     [self yy_setTextBackgroundBorder:textBackgroundBorder range:NSMakeRange(0, self.length)];
 }
@@ -986,7 +986,9 @@ return style. _attr_;
 - (void)yy_setKern:(NSNumber *)kern range:(NSRange)range {
     [self yy_setAttribute:NSKernAttributeName value:kern range:range];
 }
-
+/**!
+ o sum up: if you set the (NSString *)kCTForegroundColorAttributeName attribute on an UILabel's attributedString, it will not have any effect (whereas NSForegroundColorAttributeName does). Currently, TTTAttributedLabel behaves the opposite. It would be great if TTTAttributedLabel would take both NS* and (NSString *)kCT* attributes.
+ */
 - (void)yy_setColor:(UIColor *)color range:(NSRange)range {
     [self yy_setAttribute:(id)kCTForegroundColorAttributeName value:(id)color.CGColor range:range];
     [self yy_setAttribute:NSForegroundColorAttributeName value:color range:range];
@@ -1235,7 +1237,7 @@ return style. _attr_;
 - (void)yy_setTextShadow:(YYTextShadow *)textShadow range:(NSRange)range {
     [self yy_setAttribute:YYTextShadowAttributeName value:textShadow range:range];
 }
-
+//!YYTextInnerShadowAttributeName
 - (void)yy_setTextInnerShadow:(YYTextShadow *)textInnerShadow range:(NSRange)range {
     [self yy_setAttribute:YYTextInnerShadowAttributeName value:textInnerShadow range:range];
 }
@@ -1280,7 +1282,7 @@ return style. _attr_;
     NSValue *value = CGAffineTransformIsIdentity(textGlyphTransform) ? nil : [NSValue valueWithCGAffineTransform:textGlyphTransform];
     [self yy_setAttribute:YYTextGlyphTransformAttributeName value:value range:range];
 }
-
+//!
 - (void)yy_setTextHighlightRange:(NSRange)range
                            color:(UIColor *)color
                  backgroundColor:(UIColor *)backgroundColor
@@ -1294,7 +1296,7 @@ return style. _attr_;
     if (color) [self yy_setColor:color range:range];
     [self yy_setTextHighlight:highlight range:range];
 }
-
+//!
 - (void)yy_setTextHighlightRange:(NSRange)range
                            color:(UIColor *)color
                  backgroundColor:(UIColor *)backgroundColor

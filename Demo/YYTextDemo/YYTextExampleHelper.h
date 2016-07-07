@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextExampleHelper.h
 //  YYKitExample
 //

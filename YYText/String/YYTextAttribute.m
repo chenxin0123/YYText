@@ -117,7 +117,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
     return YYTextAttributeTypeNone;
 }
 
-
+//!
 @implementation YYTextBackedString
 
 + (instancetype)stringWithString:(NSString *)string {
@@ -144,7 +144,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
-
+//!
 @implementation YYTextBinding
 
 + (instancetype)bindingWithDeleteConfirm:(BOOL)deleteConfirm {
@@ -171,7 +171,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
-
+//!
 @implementation YYTextShadow
 
 + (instancetype)shadowWithColor:(UIColor *)color offset:(CGSize)offset radius:(CGFloat)radius {
@@ -234,7 +234,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
-
+//!
 @implementation YYTextDecoration
 
 - (instancetype)init {
@@ -280,7 +280,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
-
+//!
 @implementation YYTextBorder
 
 + (instancetype)borderWithLineStyle:(YYTextLineStyle)lineStyle lineWidth:(CGFloat)width strokeColor:(UIColor *)color {
@@ -344,7 +344,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
-
+//!
 @implementation YYTextAttachment
 
 + (instancetype)attachmentWithContent:(id)content {
@@ -381,7 +381,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
-
+//!
 @implementation YYTextHighlight
 
 + (instancetype)highlightWithAttributes:(NSDictionary *)attributes {

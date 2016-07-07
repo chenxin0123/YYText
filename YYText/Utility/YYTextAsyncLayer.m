@@ -50,9 +50,9 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
 }
 
 
-/// a thread safe incrementing counter.
+/// a thread safe incrementing counter.!
 @interface _YYTextSentinel : NSObject
-/// Returns the current value of the counter.
+/// Returns the current value of the counter. atomic
 @property (atomic, readonly) int32_t value;
 /// Increase the value atomically. @return The new value.
 - (int32_t)increase;
@@ -74,12 +74,12 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
 @end
 
 
+
 @implementation YYTextAsyncLayer {
     _YYTextSentinel *_sentinel;
 }
-
 #pragma mark - Override
-
+///返回属性默认值!
 + (id)defaultValueForKey:(NSString *)key {
     if ([key isEqualToString:@"displaysAsynchronously"]) {
         return @(YES);
@@ -87,7 +87,7 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
         return [super defaultValueForKey:key];
     }
 }
-
+//!
 - (instancetype)init {
     self = [super init];
     static CGFloat scale; //global
@@ -118,9 +118,12 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
 #pragma mark - Private
 
 - (void)_displayAsync:(BOOL)async {
+    //UIView是他的layer的代理
     __strong id<YYTextAsyncLayerDelegate> delegate = self.delegate;
+    //调用代理方法返回一个异步绘制任务
     YYTextAsyncLayerDisplayTask *task = [delegate newAsyncDisplayTask];
     if (!task.display) {
+        //无需绘制
         if (task.willDisplay) task.willDisplay(self);
         self.contents = nil;
         if (task.didDisplay) task.didDisplay(self, YES);
@@ -128,16 +131,22 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
     }
     
     if (async) {
+        //异步
         if (task.willDisplay) task.willDisplay(self);
         _YYTextSentinel *sentinel = _sentinel;
         int32_t value = sentinel.value;
+        //对象释放 同步绘制 setNeedsDisplay 时sentinel.value会增加
         BOOL (^isCancelled)() = ^BOOL() {
             return value != sentinel.value;
         };
+        
         CGSize size = self.bounds.size;
+        //Defaults to NO
         BOOL opaque = self.opaque;
         CGFloat scale = self.contentsScale;
+        
         CGColorRef backgroundColor = (opaque && self.backgroundColor) ? CGColorRetain(self.backgroundColor) : NULL;
+        //尺寸小于1
         if (size.width < 1 || size.height < 1) {
             CGImageRef image = (__bridge_retained CGImageRef)(self.contents);
             self.contents = nil;

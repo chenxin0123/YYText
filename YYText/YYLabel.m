@@ -16,7 +16,10 @@
 #import "NSAttributedString+YYText.h"
 #import <libkern/OSAtomic.h>
 
-
+/**
+ *
+ *  @return dispatch_get_global_queue
+ */
 static dispatch_queue_t YYLabelGetReleaseQueue() {
     return dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
 }
@@ -404,11 +407,12 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
 }
 
 #pragma mark - Override
-
+//!
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:CGRectZero];
     if (!self) return nil;
     self.backgroundColor = [UIColor clearColor];
+    //透明
     self.opaque = NO;
     [self _initLabel];
     self.frame = frame;
@@ -845,7 +849,7 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
         [self invalidateIntrinsicContentSize];
     }
 }
-
+//_innerText
 - (void)setAttributedText:(NSAttributedString *)attributedText {
     if (attributedText.length > 0) {
         _innerText = attributedText.mutableCopy;
@@ -1055,7 +1059,7 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
 }
 
 #pragma mark - YYTextAsyncLayerDelegate
-
+///新建一个异步绘制任务
 - (YYTextAsyncLayerDisplayTask *)newAsyncDisplayTask {
     
     // capture current context

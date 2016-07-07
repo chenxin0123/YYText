@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextExampleHelper.m
 //  YYKitExample
 //

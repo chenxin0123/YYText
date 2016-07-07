@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextDebugOption.h
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /**
- The debug option for YYText.
+ The debug option for YYText. YYLable初始化时addDebugTarget dealloc时removeDebugTarget
  */
 @interface YYTextDebugOption : NSObject <NSCopying>
 @property (nullable, nonatomic, strong) UIColor *baselineColor;      ///< baseline color

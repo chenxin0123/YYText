@@ -27,7 +27,7 @@ typedef NS_OPTIONS(NSInteger, YYTextAttributeType) {
 extern YYTextAttributeType YYTextAttributeGetType(NSString *attributeName);
 
 /**
- Line style in YYText (similar to NSUnderlineStyle).
+ Line style in YYText (similar to NSUnderlineStyle).!
  */
 typedef NS_OPTIONS (NSInteger, YYTextLineStyle) {
     // basic style (bitmask:0xFF)
@@ -153,7 +153,7 @@ UIKIT_EXTERN NSString *const YYTextTruncationToken; ///< Horizontal ellipsis (U+
 
 #pragma mark - Attribute Value Define
 
-/**
+/**!
  The tap/long press action callback defined in YYText.
  
  @param containerView The text container view (such as YYLabel/YYTextView).
@@ -164,7 +164,7 @@ UIKIT_EXTERN NSString *const YYTextTruncationToken; ///< Horizontal ellipsis (U+
 typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSRange range, CGRect rect);
 
 
-/**
+/**!
  YYTextBackedString objects are used by the NSAttributedString class cluster
  as the values for text backed string attributes (stored in the attributed 
  string under the key named YYTextBackedStringAttributeName).
@@ -178,7 +178,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @end
 
 
-/**
+/**!
  YYTextBinding objects are used by the NSAttributedString class cluster
  as the values for shadow attributes (stored in the attributed string under
  the key named YYTextBindingAttributeName).
@@ -193,7 +193,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @end
 
 
-/**
+/**!
  YYTextShadow objects are used by the NSAttributedString class cluster
  as the values for shadow attributes (stored in the attributed string under
  the key named YYTextShadowAttributeName or YYTextInnerShadowAttributeName).
@@ -214,7 +214,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @end
 
 
-/**
+/**!
  YYTextDecorationLine objects are used by the NSAttributedString class cluster
  as the values for decoration line attributes (stored in the attributed string under
  the key named YYTextUnderlineAttributeName or YYTextStrikethroughAttributeName).
@@ -232,7 +232,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @end
 
 
-/**
+/**!
  YYTextBorder objects are used by the NSAttributedString class cluster
  as the values for border attributes (stored in the attributed string under
  the key named YYTextBorderAttributeName or YYTextBackgroundBorderAttributeName).
@@ -259,7 +259,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @end
 
 
-/**
+/**!
  YYTextAttachment objects are used by the NSAttributedString class cluster 
  as the values for attachment attributes (stored in the attributed string under 
  the key named YYTextAttachmentAttributeName).
@@ -278,7 +278,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 @end
 
 
-/**
+/**!
  YYTextHighlight objects are used by the NSAttributedString class cluster
  as the values for touchable highlight attributes (stored in the attributed string
  under the key named YYTextHighlightAttributeName).
@@ -312,7 +312,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
  */
 + (instancetype)highlightWithBackgroundColor:(nullable UIColor *)color;
 
-// Convenience methods below to set the `attributes`.
+// Convenience methods below to set the `attributes`. 
 - (void)setFont:(nullable UIFont *)font;
 - (void)setColor:(nullable UIColor *)color;
 - (void)setStrokeWidth:(nullable NSNumber *)width;

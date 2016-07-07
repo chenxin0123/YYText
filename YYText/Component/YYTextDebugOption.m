@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextDebugOption.m
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -17,11 +17,11 @@
 static pthread_mutex_t _sharedDebugLock;
 static CFMutableSetRef _sharedDebugTargets = nil;
 static YYTextDebugOption *_sharedDebugOption = nil;
-
+//unsafe_unretained
 static const void* _sharedDebugSetRetain(CFAllocatorRef allocator, const void *value) {
     return value;
 }
-
+//unsafe_unretained
 static void _sharedDebugSetRelease(CFAllocatorRef allocator, const void *value) {
 }
 
@@ -30,6 +30,9 @@ void _sharedDebugSetFunction(const void *value, void *context) {
     [target setDebugOption:_sharedDebugOption];
 }
 
+/**
+ 创建一个可变的集合 集合持有对象的方式为unsafe_unretained
+ */
 static void _initSharedDebug() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

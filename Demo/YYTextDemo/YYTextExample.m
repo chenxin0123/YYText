@@ -16,7 +16,7 @@
 @end
 
 @implementation YYTextExample
-//!
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"✎      YYText Demo       ✎";
@@ -35,18 +35,18 @@
     [self addCell:@"Async Display" class:@"YYTextAsyncExample"];
     [self.tableView reloadData];
 }
-//!
+
 - (void)addCell:(NSString *)title class:(NSString *)className {
     [self.titles addObject:title];
     [self.classNames addObject:className];
 }
 
 #pragma mark - Table view data source
-//!
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _titles.count;
 }
-//!
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"YY"];
     if (!cell) {
@@ -55,7 +55,7 @@
     cell.textLabel.text = _titles[indexPath.row];
     return cell;
 }
-//!
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *className = self.classNames[indexPath.row];
     Class class = NSClassFromString(className);
