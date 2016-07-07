@@ -55,6 +55,7 @@ static dispatch_queue_t YYTextAsyncLayerGetDisplayQueue() {
     if (cur < 0) {
         cur = -cur;
     }
+
     return queues[(cur) % queueCount];
 #undef MAX_QUEUE_COUNT
 }
