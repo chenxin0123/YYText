@@ -379,6 +379,7 @@ static dispatch_queue_t YYLabelGetReleaseQueue() {
 }
 
 - (void)_initLabel {
+    //设置默认值为NO 不异步绘制
     ((YYTextAsyncLayer *)self.layer).displaysAsynchronously = NO;
     self.layer.contentsScale = [UIScreen mainScreen].scale;
     self.contentMode = UIViewContentModeRedraw;

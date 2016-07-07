@@ -17,6 +17,7 @@
 static dispatch_queue_t YYTextAsyncLayerGetDisplayQueue() {
 #define MAX_QUEUE_COUNT 16
     static int queueCount;
+    //数组
     static dispatch_queue_t queues[MAX_QUEUE_COUNT];
     static dispatch_once_t onceToken;
     static int32_t counter = 0;
@@ -24,23 +25,51 @@ static dispatch_queue_t YYTextAsyncLayerGetDisplayQueue() {
         queueCount = (int)[NSProcessInfo processInfo].activeProcessorCount;
         queueCount = queueCount < 1 ? 1 : queueCount > MAX_QUEUE_COUNT ? MAX_QUEUE_COUNT : queueCount;
         if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
+            //ios8+
             for (NSUInteger i = 0; i < queueCount; i++) {
+                //QOS_CLASS_USER_INITIATED表示任务由UI发起并且可以异步执行 用户期望(不要放太耗时操作)
                 dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);
                 queues[i] = dispatch_queue_create("com.ibireme.text.render", attr);
             }
         } else {
             for (NSUInteger i = 0; i < queueCount; i++) {
+                //线性队列
                 queues[i] = dispatch_queue_create("com.ibireme.text.render", DISPATCH_QUEUE_SERIAL);
+                /**
+                 1.相当于给队列设置优先级
+                 2.设置队列的层级结构
+                 所有的用户队列都有一个目标队列概念。从本质上讲，一个用户队列实际上是不执行任何任务的，但是它会将任务传递给它的目标队列来执行。通常，目标队列是默认优先级的全局队列。
+                 
+                 用户队列的目标队列可以用函数 dispatch_set_target_queue来修改。我们可以将任意dispatch queue传递给这个函数，甚至可以是另一个用户队列，只要别构成循环就行。
+                 
+                 一般都是把一个任务放到一个串行的queue中，如果这个任务被拆分了，被放置到多个串行的queue中，但实际还是需要这个任务同步执行，那么就会有问题，因为多个串行queue之间是并行的。这时使用dispatch_set_target_queue将多个串行的queue指定到了同一目标，那么着多个串行queue在目标queue上就是同步执行的，不再是并行执行。
+                 */
                 dispatch_set_target_queue(queues[i], dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
             }
         }
     });
+    
+    counter = INT32_MAX;
     int32_t cur = OSAtomicIncrement32(&counter);
-    if (cur < 0) cur = -cur;
+    //溢出 11111111   -128 127
+    int32_t i = INT32_MAX;
+    printf("%d\n",i);
+    i++;
+    printf("%d\n",i);
+    if (i<0) {
+        i = -i;
+        printf("%d\n",i);
+    }
+    printf("%d\n",i % 7);
+    //bug吧 溢出之后还是会溢出
+    if (cur < 0) {
+        cur = -cur;
+    }
     return queues[(cur) % queueCount];
 #undef MAX_QUEUE_COUNT
 }
 
+///dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)!
 static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
 #ifdef YYDispatchQueuePool_h
     return YYDispatchQueueGetForQOS(NSQualityOfServiceDefault);
@@ -146,8 +175,9 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
         CGFloat scale = self.contentsScale;
         
         CGColorRef backgroundColor = (opaque && self.backgroundColor) ? CGColorRetain(self.backgroundColor) : NULL;
-        //尺寸小于1
+        //尺寸小于1 不绘制
         if (size.width < 1 || size.height < 1) {
+            //__bridge_retained 取出然后release 。。。看不懂???
             CGImageRef image = (__bridge_retained CGImageRef)(self.contents);
             self.contents = nil;
             if (image) {
@@ -159,7 +189,7 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
             CGColorRelease(backgroundColor);
             return;
         }
-        
+        /* 这里开始绘制 */
         dispatch_async(YYTextAsyncLayerGetDisplayQueue(), ^{
             if (isCancelled()) {
                 CGColorRelease(backgroundColor);
