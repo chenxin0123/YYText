@@ -13,7 +13,7 @@
 #import <libkern/OSAtomic.h>
 
 
-/// Global display queue, used for content rendering.
+/// Global display queue, used for content rendering.！
 static dispatch_queue_t YYTextAsyncLayerGetDisplayQueue() {
 #define MAX_QUEUE_COUNT 16
     static int queueCount;
@@ -51,17 +51,7 @@ static dispatch_queue_t YYTextAsyncLayerGetDisplayQueue() {
     
     counter = INT32_MAX;
     int32_t cur = OSAtomicIncrement32(&counter);
-    //溢出 11111111   -128 127
-    int32_t i = INT32_MAX;
-    printf("%d\n",i);
-    i++;
-    printf("%d\n",i);
-    if (i<0) {
-        i = -i;
-        printf("%d\n",i);
-    }
-    printf("%d\n",i % 7);
-    //bug吧 溢出之后还是会溢出
+    //bug https://github.com/ibireme/YYText/issues/399 作者已修复
     if (cur < 0) {
         cur = -cur;
     }
@@ -129,23 +119,23 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
     _displaysAsynchronously = YES;
     return self;
 }
-
+//!
 - (void)dealloc {
     [_sentinel increase];
 }
-
+//!
 - (void)setNeedsDisplay {
     [self _cancelAsyncDisplay];
     [super setNeedsDisplay];
 }
-
+//!
 - (void)display {
     super.contents = super.contents;
     [self _displayAsync:_displaysAsynchronously];
 }
 
 #pragma mark - Private
-
+//!
 - (void)_displayAsync:(BOOL)async {
     //UIView是他的layer的代理
     __strong id<YYTextAsyncLayerDelegate> delegate = self.delegate;
@@ -189,15 +179,20 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
             CGColorRelease(backgroundColor);
             return;
         }
+        
         /* 这里开始绘制 */
         dispatch_async(YYTextAsyncLayerGetDisplayQueue(), ^{
             if (isCancelled()) {
+                //This function is equivalent to CFRelease, except that it does not cause an error if the color parameter is NULL
                 CGColorRelease(backgroundColor);
                 return;
             }
+            //开始图片上下午
             UIGraphicsBeginImageContextWithOptions(size, opaque, scale);
             CGContextRef context = UIGraphicsGetCurrentContext();
             if (opaque) {
+                /*opaque一般是NO 这里表示非透明 */
+                //保存上下文状态
                 CGContextSaveGState(context); {
                     if (!backgroundColor || CGColorGetAlpha(backgroundColor) < 1) {
                         CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
@@ -205,14 +200,19 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
                         CGContextFillPath(context);
                     }
                     if (backgroundColor) {
+                        //填充背景色
                         CGContextSetFillColorWithColor(context, backgroundColor);
                         CGContextAddRect(context, CGRectMake(0, 0, size.width * scale, size.height * scale));
                         CGContextFillPath(context);
                     }
-                } CGContextRestoreGState(context);
+                }
+                //取回保存的上下文
+                CGContextRestoreGState(context);
                 CGColorRelease(backgroundColor);
             }
+            //绘制
             task.display(context, size, isCancelled);
+            //取消的话则不生成图片
             if (isCancelled()) {
                 UIGraphicsEndImageContext();
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -220,14 +220,18 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
                 });
                 return;
             }
+            //生成图片然后关闭上下文
             UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
+            //取消的话不设置内容
             if (isCancelled()) {
+                //didDisplay总是在主线程调用
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (task.didDisplay) task.didDisplay(self, NO);
                 });
                 return;
             }
+            //设置内容
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (isCancelled()) {
                     if (task.didDisplay) task.didDisplay(self, NO);
@@ -238,8 +242,10 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
             });
         });
     } else {
+        //同步绘制 这里先关闭异步绘制
         [_sentinel increase];
         if (task.willDisplay) task.willDisplay(self);
+        //开始图片上下文
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, self.contentsScale);
         CGContextRef context = UIGraphicsGetCurrentContext();
         if (self.opaque) {
@@ -259,6 +265,7 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
                 }
             } CGContextRestoreGState(context);
         }
+        //绘制 设置内容 
         task.display(context, self.bounds.size, ^{return NO;});
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
@@ -266,7 +273,7 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
         if (task.didDisplay) task.didDisplay(self, YES);
     }
 }
-
+//!
 - (void)_cancelAsyncDisplay {
     [_sentinel increase];
 }

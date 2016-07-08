@@ -1,5 +1,5 @@
 //
-//  YYTextUtilities.m
+//  YYTextUtilities.m!
 //  YYText <https://github.com/ibireme/YYText>
 //
 //  Created by ibireme on 15/4/6.
@@ -12,11 +12,12 @@
 #import "YYTextUtilities.h"
 #import <Accelerate/Accelerate.h>
 #import "UIView+YYText.h"
-
+//!
 NSCharacterSet *YYTextVerticalFormRotateCharacterSet() {
     static NSMutableCharacterSet *set;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        //CJK 中日韩统一表意文字
         set = [NSMutableCharacterSet new];
         [set addCharactersInRange:NSMakeRange(0x1100, 256)]; // Hangul Jamo
         [set addCharactersInRange:NSMakeRange(0x2460, 160)]; // Enclosed Alphanumerics
@@ -55,7 +56,7 @@ NSCharacterSet *YYTextVerticalFormRotateCharacterSet() {
     });
     return set;
 }
-
+//!
 NSCharacterSet *YYTextVerticalFormRotateAndMoveCharacterSet() {
     static NSMutableCharacterSet *set;
     static dispatch_once_t onceToken;
@@ -99,6 +100,7 @@ static int matrix_invert(__CLPK_integer N, double *matrix) {
     return error;
 }
 
+//要瞎 不看
 CGAffineTransform YYTextCGAffineTransformGetFromPoints(CGPoint before[3], CGPoint after[3]) {
     if (before == NULL || after == NULL) return CGAffineTransformIdentity;
     
@@ -131,7 +133,7 @@ CGAffineTransform YYTextCGAffineTransformGetFromPoints(CGPoint before[3], CGPoin
     CGAffineTransform transform = CGAffineTransformMake(M[0], M[2], M[1], M[3], M[4], M[5]);
     return transform;
 }
-
+//!
 CGAffineTransform YYTextCGAffineTransformGetFromViews(UIView *from, UIView *to) {
     if (!from || !to) return CGAffineTransformIdentity;
     
@@ -145,7 +147,7 @@ CGAffineTransform YYTextCGAffineTransformGetFromViews(UIView *from, UIView *to) 
     
     return YYTextCGAffineTransformGetFromPoints(before, after);
 }
-
+//!
 UIViewContentMode YYTextCAGravityToUIViewContentMode(NSString *gravity) {
     static NSDictionary *dic;
     static dispatch_once_t onceToken;
@@ -166,7 +168,7 @@ UIViewContentMode YYTextCAGravityToUIViewContentMode(NSString *gravity) {
     if (!gravity) return UIViewContentModeScaleToFill;
     return (UIViewContentMode)((NSNumber *)dic[gravity]).integerValue;
 }
-
+//!
 NSString *YYTextUIViewContentModeToCAGravity(UIViewContentMode contentMode) {
     switch (contentMode) {
         case UIViewContentModeScaleToFill: return kCAGravityResize;
@@ -185,12 +187,22 @@ NSString *YYTextUIViewContentModeToCAGravity(UIViewContentMode contentMode) {
         default: return kCAGravityResize;
     }
 }
-
+//!
 CGRect YYTextCGRectFitWithContentMode(CGRect rect, CGSize size, UIViewContentMode mode) {
+    /**
+     //CGRectMake(1, 1, 1, 1)返回(1, 1, 1, 1)
+     //CGRectMake(1, 1, 1, -1)返回(1, 0, 1, 1)
+     //CGRectMake(1, 1, -1, 1)返回(0, 1, 1, 1)
+     //CGRectMake(1, 1, -1, -1)返回(0, 0, 1, 1)
+     //只有当width或height小于零时才有改变
+     */
     rect = CGRectStandardize(rect);
+    
     size.width = size.width < 0 ? -size.width : size.width;
     size.height = size.height < 0 ? -size.height : size.height;
+    
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+    
     switch (mode) {
         case UIViewContentModeScaleAspectFit:
         case UIViewContentModeScaleAspectFill: {
@@ -202,8 +214,10 @@ CGRect YYTextCGRectFitWithContentMode(CGRect rect, CGSize size, UIViewContentMod
                 CGFloat scale;
                 if (mode == UIViewContentModeScaleAspectFit) {
                     if (size.width / size.height < rect.size.width / rect.size.height) {
+                        //长图
                         scale = rect.size.height / size.height;
                     } else {
+                        //width
                         scale = rect.size.width / size.width;
                     }
                 } else {
@@ -257,6 +271,7 @@ CGRect YYTextCGRectFitWithContentMode(CGRect rect, CGSize size, UIViewContentMod
             rect.origin.y += rect.size.height - size.height;
             rect.size = size;
         } break;
+        //UIViewContentModeRedraw跟UIViewContentModeScaleToFill一样对待
         case UIViewContentModeScaleToFill:
         case UIViewContentModeRedraw:
         default: {

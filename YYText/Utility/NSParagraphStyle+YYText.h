@@ -1,4 +1,4 @@
-//
+//！
 //  NSParagraphStyle+YYText.h
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -15,6 +15,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Provides extensions for `NSParagraphStyle` to work with CoreText.
+ 
+ 
+ NSParagraphStyle is NOT toll-free bridged to CTParagraphStyleRef.
+ 
+ CoreText can use both NSParagraphStyle and CTParagraphStyleRef,
+ but UILabel/UITextView can only use NSParagraphStyle.
+ 
+ We use NSParagraphStyle in both CoreText and UIKit.
+ 
  */
 @interface NSParagraphStyle (YYText)
 

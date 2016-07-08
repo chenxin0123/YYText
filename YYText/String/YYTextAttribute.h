@@ -1,4 +1,4 @@
-//
+//！
 //  YYTextAttribute.h
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -23,7 +23,7 @@ typedef NS_OPTIONS(NSInteger, YYTextAttributeType) {
     YYTextAttributeTypeYYText   = 1 << 2, ///< YYText attributes, used by YYText.
 };
 
-/// Get the attribute type from an attribute name.
+/// Get the attribute type from an attribute name.一个属性被哪些框架支持
 extern YYTextAttributeType YYTextAttributeGetType(NSString *attributeName);
 
 /**
@@ -127,6 +127,7 @@ UIKIT_EXTERN NSString *const YYTextBackgroundBorderAttributeName;
 /// The value of this attribute is a `YYTextBorder` object.
 /// Use this attribute to add a code block border to one or more line of text.
 /// The border will be drawn below the text glyphs.
+/// markdown的代码框
 UIKIT_EXTERN NSString *const YYTextBlockBorderAttributeName;
 
 /// The value of this attribute is a `YYTextAttachment` object.
@@ -146,7 +147,9 @@ UIKIT_EXTERN NSString *const YYTextGlyphTransformAttributeName;
 
 #pragma mark - String Token Define
 
+//属性文本中用来替换附件
 UIKIT_EXTERN NSString *const YYTextAttachmentToken; ///< Object replacement character (U+FFFC), used for text attachment.
+//属性文本中用来替换...
 UIKIT_EXTERN NSString *const YYTextTruncationToken; ///< Horizontal ellipsis (U+2026), used for text truncation  "…".
 
 
@@ -221,6 +224,7 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
  
  When it's used as underline, the line is drawn below text glyphs;
  when it's used as strikethrough, the line is drawn above text glyphs.
+ 下划线或者中间划线
  */
 @interface YYTextDecoration : NSObject <NSCoding, NSCopying>
 + (instancetype)decorationWithStyle:(YYTextLineStyle)style;

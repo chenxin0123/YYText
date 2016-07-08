@@ -54,7 +54,7 @@ static double _YYDeviceSystemVersion() {
 
 
 @implementation NSAttributedString (YYText)
-
+//!
 - (NSData *)yy_archiveToData {
     NSData *data = nil;
     @try {
@@ -65,7 +65,7 @@ static double _YYDeviceSystemVersion() {
     }
     return data;
 }
-
+//!
 + (instancetype)yy_unarchiveFromData:(NSData *)data {
     NSAttributedString *one = nil;
     @try {
@@ -76,27 +76,27 @@ static double _YYDeviceSystemVersion() {
     }
     return one;
 }
-
+//!
 - (NSDictionary *)yy_attributesAtIndex:(NSUInteger)index {
     if (self.length > 0 && index == self.length) index--;
     return [self attributesAtIndex:index effectiveRange:NULL];
 }
-
+//!
 - (id)yy_attribute:(NSString *)attributeName atIndex:(NSUInteger)index {
     if (!attributeName) return nil;
     if (self.length == 0) return nil;
     if (self.length > 0 && index == self.length) index--;
     return [self attribute:attributeName atIndex:index effectiveRange:NULL];
 }
-
+//!
 - (NSDictionary *)yy_attributes {
     return [self yy_attributesAtIndex:0];
 }
-
+//!
 - (UIFont *)yy_font {
     return [self yy_fontAtIndex:0];
 }
-
+//!
 - (UIFont *)yy_fontAtIndex:(NSUInteger)index {
     /*
      In iOS7 and later, UIFont is toll-free bridged to CTFontRef,
@@ -125,19 +125,19 @@ static double _YYDeviceSystemVersion() {
     }
     return font;
 }
-
+//!
 - (NSNumber *)yy_kern {
     return [self yy_kernAtIndex:0];
 }
-
+//!
 - (NSNumber *)yy_kernAtIndex:(NSUInteger)index {
     return [self yy_attribute:NSKernAttributeName atIndex:index];
 }
-
+//!
 - (UIColor *)yy_color {
     return [self yy_colorAtIndex:0];
 }
-
+//!
 - (UIColor *)yy_colorAtIndex:(NSUInteger)index {
     UIColor *color = [self yy_attribute:NSForegroundColorAttributeName atIndex:index];
     if (!color) {
@@ -153,27 +153,27 @@ static double _YYDeviceSystemVersion() {
     }
     return color;
 }
-
+//!
 - (UIColor *)yy_backgroundColor {
     return [self yy_backgroundColorAtIndex:0];
 }
-
+//!
 - (UIColor *)yy_backgroundColorAtIndex:(NSUInteger)index {
     return [self yy_attribute:NSBackgroundColorAttributeName atIndex:index];
 }
-
+//！
 - (NSNumber *)yy_strokeWidth {
     return [self yy_strokeWidthAtIndex:0];
 }
-
+//!
 - (NSNumber *)yy_strokeWidthAtIndex:(NSUInteger)index {
     return [self yy_attribute:NSStrokeWidthAttributeName atIndex:index];
 }
-
+//!
 - (UIColor *)yy_strokeColor {
     return [self yy_strokeColorAtIndex:0];
 }
-
+//!
 - (UIColor *)yy_strokeColorAtIndex:(NSUInteger)index {
     UIColor *color = [self yy_attribute:NSStrokeColorAttributeName atIndex:index];
     if (!color) {
@@ -182,48 +182,48 @@ static double _YYDeviceSystemVersion() {
     }
     return color;
 }
-
+//!
 - (NSShadow *)yy_shadow {
     return [self yy_shadowAtIndex:0];
 }
-
+//!
 - (NSShadow *)yy_shadowAtIndex:(NSUInteger)index {
     return [self yy_attribute:NSShadowAttributeName atIndex:index];
 }
-
+//!
 - (NSUnderlineStyle)yy_strikethroughStyle {
     return [self yy_strikethroughStyleAtIndex:0];
 }
-
+//!
 - (NSUnderlineStyle)yy_strikethroughStyleAtIndex:(NSUInteger)index {
     NSNumber *style = [self yy_attribute:NSStrikethroughStyleAttributeName atIndex:index];
     return style.integerValue;
 }
-
+//!
 - (UIColor *)yy_strikethroughColor {
     return [self yy_strikethroughColorAtIndex:0];
 }
-
+//!
 - (UIColor *)yy_strikethroughColorAtIndex:(NSUInteger)index {
     if (kSystemVersion >= 7) {
         return [self yy_attribute:NSStrikethroughColorAttributeName atIndex:index];
     }
     return nil;
 }
-
+//!
 - (NSUnderlineStyle)yy_underlineStyle {
     return [self yy_underlineStyleAtIndex:0];
 }
-
+//!
 - (NSUnderlineStyle)yy_underlineStyleAtIndex:(NSUInteger)index {
     NSNumber *style = [self yy_attribute:NSUnderlineStyleAttributeName atIndex:index];
     return style.integerValue;
 }
-
+//!
 - (UIColor *)yy_underlineColor {
     return [self yy_underlineColorAtIndex:0];
 }
-
+//!
 - (UIColor *)yy_underlineColorAtIndex:(NSUInteger)index {
     UIColor *color = nil;
     if (kSystemVersion >= 7) {
@@ -235,30 +235,30 @@ static double _YYDeviceSystemVersion() {
     }
     return color;
 }
-
+//!
 - (NSNumber *)yy_ligature {
     return [self yy_ligatureAtIndex:0];
 }
-
+//!
 - (NSNumber *)yy_ligatureAtIndex:(NSUInteger)index {
     return [self yy_attribute:NSLigatureAttributeName atIndex:index];
 }
-
+//!
 - (NSString *)yy_textEffect {
     return [self yy_textEffectAtIndex:0];
 }
-
+//!
 - (NSString *)yy_textEffectAtIndex:(NSUInteger)index {
     if (kSystemVersion >= 7) {
         return [self yy_attribute:NSTextEffectAttributeName atIndex:index];
     }
     return nil;
 }
-
+//!
 - (NSNumber *)yy_obliqueness {
     return [self yy_obliquenessAtIndex:0];
 }
-
+//!
 - (NSNumber *)yy_obliquenessAtIndex:(NSUInteger)index {
     if (kSystemVersion >= 7) {
         return [self yy_attribute:NSObliquenessAttributeName atIndex:index];
@@ -538,6 +538,7 @@ return style. _attr_;
     NSMutableString *result = [NSMutableString string];
     if (range.length == 0) return result;
     NSString *string = self.string;
+    //遍历所以属性 以含或不含YYTextBackedStringAttributeName来分块
     [self enumerateAttribute:YYTextBackedStringAttributeName inRange:range options:kNilOptions usingBlock:^(id value, NSRange range, BOOL *stop) {
         YYTextBackedString *backed = value;
         if (backed && backed.string) {
@@ -698,6 +699,7 @@ return style. _attr_;
 }
 
 - (BOOL)yy_canDrawWithUIKit {
+    //UIKit不支持的属性
     static NSMutableSet *failSet;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -760,6 +762,7 @@ return style. _attr_;
 
 - (void)setYy_attributes:(NSDictionary *)attributes {
     if (attributes == (id)[NSNull null]) attributes = nil;
+    //remove old
     [self setAttributes:@{} range:NSMakeRange(0, self.length)];
     [attributes enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         [self yy_setAttribute:key value:obj];
@@ -1308,7 +1311,7 @@ return style. _attr_;
                      tapAction:tapAction
                longPressAction:nil];
 }
-
+//!
 - (void)yy_setTextHighlightRange:(NSRange)range
                            color:(UIColor *)color
                  backgroundColor:(UIColor *)backgroundColor
@@ -1347,9 +1350,11 @@ return style. _attr_;
             chars = malloc(str.length * sizeof(UniChar));
             if (chars) {
                 needFree = YES;
+                //Copies a range of the Unicode characters from a string to a user-provided buffer.
                 CFStringGetCharacters(cfStr, CFRangeMake(0, str.length), chars);
             }
         }
+        
         if (!chars) { // fail to get unichar..
             containsJoiner = YES;
         } else {
@@ -1377,6 +1382,7 @@ return style. _attr_;
     }];
 }
 
+///移除范围内不连续的属性
 - (void)yy_removeDiscontinuousAttributesInRange:(NSRange)range {
     NSArray *keys = [NSMutableAttributedString yy_allDiscontinuousAttributeKeys];
     for (NSString *key in keys) {
@@ -1384,6 +1390,7 @@ return style. _attr_;
     }
 }
 
+///返回一个静态的字典
 + (NSArray *)yy_allDiscontinuousAttributeKeys {
     static NSMutableArray *keys;
     static dispatch_once_t onceToken;

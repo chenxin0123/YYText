@@ -28,13 +28,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface NSAttributedString (YYText)
 
-/**
+/**!
  Archive the string to data.
  @return Returns nil if an error occurs.
  */
 - (nullable NSData *)yy_archiveToData;
 
-/**
+/**!
  Unarchive string from data.
  @param data  The archived attributed string data.
  @return Returns nil if an error occurs.
@@ -48,12 +48,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Retrieving character attribute information
 ///=============================================================================
 
-/**
+/**!
  Returns the attributes at first charactor.
  */
 @property (nullable, nonatomic, copy, readonly) NSDictionary<NSString *, id> *yy_attributes;
 
-/**
+/**!
  Returns the attributes for the character at a given index.
  
  @discussion Raises an `NSRangeException` if index lies beyond the end of the 
@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (nullable NSDictionary<NSString *, id> *)yy_attributesAtIndex:(NSUInteger)index;
 
-/**
+/**!
  Returns the value for an attribute with a given name of the character at a given index.
  
  @discussion Raises an `NSRangeException` if index lies beyond the end of the
@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Get character attribute as property
 ///=============================================================================
 
-/**
+/**!
  The font of the text. (read-only)
  
  @discussion Default is Helvetica (Neue) 12.
@@ -97,7 +97,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) UIFont *yy_font;
 - (nullable UIFont *)yy_fontAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ 字距离
+ 
  A kerning adjustment. (read-only)
  
  @discussion Default is standard kerning. The kerning attribute indicate how many 
@@ -112,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSNumber *yy_kern;
 - (nullable NSNumber *)yy_kernAtIndex:(NSUInteger)index;
 
-/**
+/**！
  The foreground color. (read-only)
  
  @discussion Default is Black.
@@ -122,7 +124,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) UIColor *yy_color;
 - (nullable UIColor *)yy_colorAtIndex:(NSUInteger)index;
 
-/**
+/**!
  The background color. (read-only)
  
  @discussion Default is nil (or no background).
@@ -132,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) UIColor *yy_backgroundColor;
 - (nullable UIColor *)yy_backgroundColorAtIndex:(NSUInteger)index;
 
-/**
+/**!
  The stroke width. (read-only)
  
  @discussion Default value is 0.0 (no stroke). This attribute, interpreted as
@@ -145,7 +147,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSNumber *yy_strokeWidth;
 - (nullable NSNumber *)yy_strokeWidthAtIndex:(NSUInteger)index;
 
-/**
+/**!
  The stroke color. (read-only)
  
  @discussion Default value is nil (same as foreground color).
@@ -155,7 +157,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) UIColor *yy_strokeColor;
 - (nullable UIColor *)yy_strokeColorAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSShadowAttributeName
+ 
  The text shadow. (read-only)
  
  @discussion Default value is nil (no shadow).
@@ -165,7 +169,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSShadow *yy_shadow;
 - (nullable NSShadow *)yy_shadowAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSStrikethroughStyleAttributeName
+ 
  The strikethrough style. (read-only)
  
  @discussion Default value is NSUnderlineStyleNone (no strikethrough).
@@ -175,7 +181,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSUnderlineStyle yy_strikethroughStyle;
 - (NSUnderlineStyle)yy_strikethroughStyleAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSStrikethroughColorAttributeName
+ 
  The strikethrough color. (read-only)
  
  @discussion Default value is nil (same as foreground color).
@@ -185,7 +193,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) UIColor *yy_strikethroughColor;
 - (nullable UIColor *)yy_strikethroughColorAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSUnderlineStyleAttributeName
+ 
  The underline style. (read-only)
  
  @discussion Default value is NSUnderlineStyleNone (no underline).
@@ -195,7 +205,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSUnderlineStyle yy_underlineStyle;
 - (NSUnderlineStyle)yy_underlineStyleAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSUnderlineColorAttributeName kCTUnderlineColorAttributeName
  The underline color. (read-only)
  
  @discussion Default value is nil (same as foreground color).
@@ -205,7 +216,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) UIColor *yy_underlineColor;
 - (nullable UIColor *)yy_underlineColorAtIndex:(NSUInteger)index;
 
-/**
+/**！
+ NSLigatureAttributeName
+ 连字这个属性效果取决于字体
  Ligature formation control. (read-only)
  
  @discussion Default is int value 1. The ligature attribute determines what kinds 
@@ -220,7 +233,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSNumber *yy_ligature;
 - (nullable NSNumber *)yy_ligatureAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSTextEffectAttributeName
+ 
  The text effect. (read-only)
  
  @discussion Default is nil (no effect). The only currently supported value
@@ -231,7 +246,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSString *yy_textEffect;
 - (nullable NSString *)yy_textEffectAtIndex:(NSUInteger)index;
 
-/**
+/**!
  The skew to be applied to glyphs. (read-only)
  
  @discussion Default is 0 (no skew).
@@ -241,7 +256,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSNumber *yy_obliqueness;
 - (nullable NSNumber *)yy_obliquenessAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSExpansionAttributeName
+ 
  The log of the expansion factor to be applied to glyphs. (read-only)
  
  @discussion Default is 0 (no expansion).
@@ -251,7 +268,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSNumber *yy_expansion;
 - (nullable NSNumber *)yy_expansionAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSBaselineOffsetAttributeName
  The character's offset from the baseline, in points. (read-only)
  
  @discussion Default is 0.
@@ -261,7 +279,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSNumber *yy_baselineOffset;
 - (nullable NSNumber *)yy_baselineOffsetAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ NSVerticalGlyphFormAttributeName
  Glyph orientation control. (read-only)
  
  @discussion Default is NO. A value of NO indicates that horizontal glyph forms 
@@ -272,7 +291,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) BOOL yy_verticalGlyphForm;
 - (BOOL)yy_verticalGlyphFormAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ kCTLanguageAttributeName
  Specifies text language. (read-only)
  
  @discussion Value must be a NSString containing a locale identifier. Default is 
@@ -284,7 +304,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSString *yy_language;
 - (nullable NSString *)yy_languageAtIndex:(NSUInteger)index;
 
-/**
+/**!
+ kCTWritingDirectionAttributeName
+ 
  Specifies a bidirectional override or embedding. (read-only)
  
  @discussion See alse NSWritingDirection and NSWritingDirectionAttributeName.
@@ -294,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, strong, readonly) NSArray<NSNumber *> *yy_writingDirection;
 - (nullable NSArray<NSNumber *> *)yy_writingDirectionAtIndex:(NSUInteger)index;
 
-/**
+/**!
  An NSParagraphStyle object which is used to specify things like
  line alignment, tab rulers, writing direction, etc. (read-only)
  
@@ -585,7 +607,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Query for YYText
 ///=============================================================================
 
-/**
+/**！
  Returns the plain text from a range.
  If there's `YYTextBackedStringAttributeName` attribute, the backed string will
  replace the attributed string range.
@@ -601,7 +623,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Create attachment string for YYText
 ///=============================================================================
 
-/**
+/**！
  Creates and returns an attachment.
  
  @param content      The attachment (UIImage/UIView/CALayer).

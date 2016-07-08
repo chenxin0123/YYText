@@ -1,4 +1,4 @@
-//
+//！
 //  NSParagraphStyle+YYText.m
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -22,19 +22,19 @@
 
 + (NSParagraphStyle *)yy_styleWithCTStyle:(CTParagraphStyleRef)CTStyle {
     if (CTStyle == NULL) return nil;
-    
+    ///详细https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/Rulers/Concepts/AboutParaStyles.html#//apple_ref/doc/uid/20000879-CJBBEHJA
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    
+    //行间距
     CGFloat lineSpacing;
     if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &lineSpacing)) {
         style.lineSpacing = lineSpacing;
     }
-    
+    //段间距
     CGFloat paragraphSpacing;
     if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &paragraphSpacing)) {
         style.paragraphSpacing = paragraphSpacing;
     }
-    
+    //对齐方式
     CTTextAlignment alignment;
     if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &alignment)) {
         style.alignment = NSTextAlignmentFromCTTextAlignment(alignment);
@@ -75,17 +75,20 @@
         style.baseWritingDirection = (NSWritingDirection)baseWritingDirection;
     }
     
+    //行高的乘数 受最大最小行高约束之前 行高先乘以该属性
     CGFloat lineHeightMultiple;
     if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), &lineHeightMultiple)) {
         style.lineHeightMultiple = lineHeightMultiple;
     }
     
+    //段开始的间距
     CGFloat paragraphSpacingBefore;
     if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierParagraphSpacingBefore, sizeof(CGFloat), &paragraphSpacingBefore)) {
         style.paragraphSpacingBefore = paragraphSpacingBefore;
     }
     
     if ([style respondsToSelector:@selector(tabStops)]) {
+        //按TAB键的聚焦文字
         CFArrayRef tabStops;
         if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &tabStops)) {
             if ([style respondsToSelector:@selector(setTabStops:)]) {
@@ -105,6 +108,7 @@
         CGFloat defaultTabInterval;
         if (CTParagraphStyleGetValueForSpecifier(CTStyle, kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(CGFloat), &defaultTabInterval)) {
             if ([style respondsToSelector:@selector(setDefaultTabInterval:)]) {
+                //tab间距
                 style.defaultTabInterval = defaultTabInterval;
             }
         }

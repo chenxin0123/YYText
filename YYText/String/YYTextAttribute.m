@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextAttribute.m
 //  YYText <https://github.com/ibireme/YYText>
 //
