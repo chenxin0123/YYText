@@ -1,4 +1,4 @@
-//
+//!
 //  NSAttributedString+YYText.m
 //  YYText <https://github.com/ibireme/YYText>
 //

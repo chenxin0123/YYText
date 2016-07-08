@@ -1,5 +1,5 @@
-//
-//  YYTextUtilities.h!
+//!
+//  YYTextUtilities.h
 //  YYText <https://github.com/ibireme/YYText>
 //
 //  Created by ibireme on 15/4/6.
