@@ -24,7 +24,7 @@
     UIFont *_boldFont;
     UIFont *_italicFont;
     UIFont *_boldItalicFont;
-    UIFont *_monospaceFont;
+    UIFont *_monospaceFont;///< code font
     YYTextBorder *_border;
     
     NSRegularExpression *_regexEscape;          ///< escape
@@ -45,7 +45,7 @@
     NSRegularExpression *_regexCodeBlock;       ///< \tcode \tcode
     NSRegularExpression *_regexNotEmptyLine;
 }
-
+//!
 - (void)initRegex {
 #define regexp(reg, option) [NSRegularExpression regularExpressionWithPattern : @reg options : option error : NULL]
     _regexEscape = regexp("(\\\\\\\\|\\\\\\`|\\\\\\*|\\\\\\_|\\\\\\(|\\\\\\)|\\\\\\[|\\\\\\]|\\\\#|\\\\\\+|\\\\\\-|\\\\\\!)", 0);
@@ -67,7 +67,7 @@
     _regexNotEmptyLine = regexp("^[ \\t]*[^ \\t]+[ \\t]*$", NSRegularExpressionAnchorsMatchLines);
 #undef regexp
 }
-
+//!
 - (instancetype)init {
     self = [super init];
     _fontSize = 14;
@@ -77,19 +77,19 @@
     [self initRegex];
     return self;
 }
-
+//!
 - (void)setFontSize:(CGFloat)fontSize {
     if (fontSize < 1) fontSize = 12;
     _fontSize = fontSize;
     [self _updateFonts];
 }
-
+//!
 - (void)setHeaderFontSize:(CGFloat)headerFontSize {
     if (headerFontSize < 1) headerFontSize = 20;
     _headerFontSize = headerFontSize;
     [self _updateFonts];
 }
-
+//!
 - (void)_updateFonts {
     _font = [UIFont systemFontOfSize:_fontSize];
     _headerFonts = [NSMutableArray new];
@@ -103,7 +103,7 @@
     _monospaceFont = [UIFont fontWithName:@"Menlo" size:_fontSize]; // Since iOS 7
     if (!_monospaceFont) _monospaceFont = [UIFont fontWithName:@"Courier" size:_fontSize]; // Since iOS 3
 }
-
+//!
 - (void)setColorWithBrightTheme {
     _textColor = [UIColor blackColor];
     _controlTextColor = [UIColor colorWithWhite:0.749 alpha:1.000];
@@ -120,7 +120,7 @@
     _border.cornerRadius = 2;
     _border.strokeWidth = YYTextCGFloatFromPixel(1);
 }
-
+//!
 - (void)setColorWithDarkTheme {
     _textColor = [UIColor whiteColor];
     _controlTextColor = [UIColor colorWithWhite:0.604 alpha:1.000];
@@ -137,7 +137,7 @@
     _border.cornerRadius = 2;
     _border.strokeWidth = YYTextCGFloatFromPixel(1);
 }
-
+//!
 - (NSUInteger)lenghOfBeginWhiteInString:(NSString *)str withRange:(NSRange)range{
     for (NSUInteger i = 0; i < range.length; i++) {
         unichar c = [str characterAtIndex:i + range.location];
@@ -145,7 +145,7 @@
     }
     return str.length;
 }
-
+//!
 - (NSUInteger)lenghOfEndWhiteInString:(NSString *)str withRange:(NSRange)range{
     for (NSInteger i = range.length - 1; i >= 0; i--) {
         unichar c = [str characterAtIndex:i + range.location];
@@ -153,21 +153,24 @@
     }
     return str.length;
 }
-
+//!
 - (NSUInteger)lenghOfBeginChar:(unichar)c inString:(NSString *)str withRange:(NSRange)range{
     for (NSUInteger i = 0; i < range.length; i++) {
         if ([str characterAtIndex:i + range.location] != c) return i;
     }
     return str.length;
 }
-
+//!
 - (BOOL)parseText:(NSMutableAttributedString *)text selectedRange:(NSRangePointer)range {
     if (text.length == 0) return NO;
+    //remove all attributes first
     [text yy_removeAttributesInRange:NSMakeRange(0, text.length)];
+    //set text font and color
     text.yy_font = _font;
     text.yy_color = _textColor;
     
     NSMutableString *str = text.string.mutableCopy;
+    
     [_regexEscape replaceMatchesInString:str options:kNilOptions range:NSMakeRange(0, str.length) withTemplate:@"@@"];
     
     [_regexHeader enumerateMatchesInString:str options:0 range:NSMakeRange(0, str.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {

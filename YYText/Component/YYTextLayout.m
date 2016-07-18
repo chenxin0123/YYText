@@ -22,6 +22,7 @@ typedef struct {
     CGFloat foot;
 } YYRowEdge;
 
+///!限制大小
 static inline CGSize YYTextClipCGSize(CGSize size) {
     if (size.width > YYTextContainerMaxSize.width) size.width = YYTextContainerMaxSize.width;
     if (size.height > YYTextContainerMaxSize.height) size.height = YYTextContainerMaxSize.height;
@@ -72,7 +73,7 @@ static CGColorRef YYTextGetCGColor(CGColorRef color) {
         }
     }
 }
-
+//!
 - (id)copyWithZone:(NSZone *)zone {
     YYTextLinePositionSimpleModifier *one = [self.class new];
     one.fixedLineHeight = _fixedLineHeight;
@@ -98,18 +99,18 @@ static CGColorRef YYTextGetCGColor(CGColorRef color) {
     NSAttributedString *_truncationToken;
     id<YYTextLinePositionModifier> _linePositionModifier;
 }
-
+//!
 + (instancetype)containerWithSize:(CGSize)size {
     return [self containerWithSize:size insets:UIEdgeInsetsZero];
 }
-
+//!
 + (instancetype)containerWithSize:(CGSize)size insets:(UIEdgeInsets)insets {
     YYTextContainer *one = [self new];
     one.size = YYTextClipCGSize(size);
     one.insets = insets;
     return one;
 }
-
+//!
 + (instancetype)containerWithPath:(UIBezierPath *)path {
     if (!path) return nil;
     YYTextContainer *one = [self new];

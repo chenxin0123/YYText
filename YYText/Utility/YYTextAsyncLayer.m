@@ -167,7 +167,7 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
         CGColorRef backgroundColor = (opaque && self.backgroundColor) ? CGColorRetain(self.backgroundColor) : NULL;
         //尺寸小于1 不绘制
         if (size.width < 1 || size.height < 1) {
-            //__bridge_retained 取出然后release 。。。看不懂???
+            //__bridge_retained 取出然后release
             CGImageRef image = (__bridge_retained CGImageRef)(self.contents);
             self.contents = nil;
             if (image) {
@@ -187,7 +187,7 @@ static dispatch_queue_t YYTextAsyncLayerGetReleaseQueue() {
                 CGColorRelease(backgroundColor);
                 return;
             }
-            //开始图片上下午
+            //开始图片上下文
             UIGraphicsBeginImageContextWithOptions(size, opaque, scale);
             CGContextRef context = UIGraphicsGetCurrentContext();
             if (opaque) {

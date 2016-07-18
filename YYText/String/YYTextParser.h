@@ -54,8 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
  Or you can use lex/yacc to generate your custom parser.
  */
 @interface YYTextSimpleMarkdownParser : NSObject <YYTextParser>
-@property (nonatomic) CGFloat fontSize;         ///< default is 14
-@property (nonatomic) CGFloat headerFontSize;   ///< default is 20
+@property (nonatomic) CGFloat fontSize;         ///< default is 14 used to make _boldFont _italicFont,.etc
+@property (nonatomic) CGFloat headerFontSize;   ///< default is 20 used to calculate h1~h6 font size
 
 @property (nullable, nonatomic, strong) UIColor *textColor;
 @property (nullable, nonatomic, strong) UIColor *controlTextColor;
@@ -67,7 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setColorWithBrightTheme; ///< reset the color properties to pre-defined value.
 - (void)setColorWithDarkTheme;   ///< reset the color properties to pre-defined value.
 @end
-
 
 
 /**
