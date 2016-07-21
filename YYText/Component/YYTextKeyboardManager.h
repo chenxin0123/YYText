@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextKeyboardManager.h
 //  YYText <https://github.com/ibireme/YYText>
 //

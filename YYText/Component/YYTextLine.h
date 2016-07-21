@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextLine.h
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)lineWithCTLine:(CTLineRef)CTLine position:(CGPoint)position vertical:(BOOL)isVertical;
 
 @property (nonatomic) NSUInteger index;     ///< line index
-@property (nonatomic) NSUInteger row;       ///< line row
+@property (nonatomic) NSUInteger row;       ///< line row 两个CTLinerow可能一样 视觉上是同一行
 @property (nullable, nonatomic, strong) NSArray<NSArray<YYTextRunGlyphRange *> *> *verticalRotateRange; ///< Run rotate range
 
 @property (nonatomic, readonly) CTLineRef CTLine;   ///< CoreText line

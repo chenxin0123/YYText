@@ -27,7 +27,7 @@
 #define kDiameter 113.0
 #define kPadding 7.0
 #define kSize CGSizeMake(kDiameter + kPadding * 2, kDiameter + kPadding * 2)
-
+///!
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     _contentView = [UIImageView new];
@@ -42,21 +42,21 @@
     [self addSubview:_coverView];
     return self;
 }
-
+///!
 - (instancetype)init {
     self = [self initWithFrame:CGRectZero];
     self.frame = (CGRect){.size = [self sizeThatFits:CGSizeZero]};
     return self;
 }
-
+///!
 - (YYTextMagnifierType)type {
     return YYTextMagnifierTypeCaret;
 }
-
+///!
 - (CGSize)sizeThatFits:(CGSize)size {
     return kSize;
 }
-
+///!
 - (void)setSnapshot:(UIImage *)snapshot {
     if (self.captureFadeAnimation) {
         [_contentView.layer removeAnimationForKey:@"contents"];
@@ -67,20 +67,20 @@
     }
     _contentView.image = snapshot;
 }
-
+///!
 - (UIImage *)snapshot {
     return _contentView.image;
 }
-
+///!
 - (CGSize)snapshotSize {
     CGFloat length = floor(kDiameter / 1.2);
     return CGSizeMake(length, length);
 }
-
+///!
 - (CGSize)fitSize {
     return [self sizeThatFits:CGSizeZero];
 }
-
+///!
 + (UIImage *)coverImage {
     static UIImage *image;
     static dispatch_once_t onceToken;
@@ -331,7 +331,7 @@
 
 @end
 
-
+///!
 @implementation YYTextMagnifier
 
 + (id)magnifierWithType:(YYTextMagnifierType)type {

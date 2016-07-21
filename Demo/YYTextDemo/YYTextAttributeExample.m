@@ -106,7 +106,7 @@
     }
     
     {//!
-        NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"Border"];
+        NSMutableAttributedString *one = [[NSMutableAttributedString alloc] initWithString:@"BorderBorderBorderBorderBorde"];
         one.yy_font = [UIFont boldSystemFontOfSize:30];
         one.yy_color = [UIColor colorWithRed:1.000 green:0.029 blue:0.651 alpha:1.000];
         
@@ -117,15 +117,29 @@
         border.lineStyle = YYTextLineStylePatternDash;
         border.cornerRadius = 3;
         border.insets = UIEdgeInsetsMake(0, -4, 0, -4);
-        //YYTextBackgroundBorderAttributeName
         one.yy_textBackgroundBorder = border;
-//        one.yy_textBorder = border;
+        
+        
+        YYTextBorder *_border = [YYTextBorder new];
+        _border.lineStyle = YYTextLineStyleSingle;
+        _border.fillColor = [UIColor lightGrayColor];
+        _border.strokeColor = [UIColor colorWithWhite:0.546 alpha:0.650];
+        _border.insets = UIEdgeInsetsMake(-1, 0, -1, 0);
+        _border.cornerRadius = 2;
+        _border.strokeWidth = YYTextCGFloatFromPixel(1);
+        [one yy_setTextBlockBorder:_border range:NSMakeRange(0, one.length-3)];
+
+        
         [text appendAttributedString:[self padding]];
         [text appendAttributedString:one];
         [text appendAttributedString:[self padding]];
         [text appendAttributedString:[self padding]];
         [text appendAttributedString:[self padding]];
         [text appendAttributedString:[self padding]];
+        
+        
+        
+       
     }
     
     {//!
@@ -232,10 +246,11 @@
     
     YYLabel *label = [YYLabel new];
     label.attributedText = text;
-    label.width = self.view.width;
+    label.width = self.view.width-20;
+    label.origin = CGPointMake(10, 10);
     label.height = self.view.height - (kiOS7Later ? 64 : 44);
     label.top = (kiOS7Later ? 64 : 0);
-    label.textAlignment = NSTextAlignmentCenter;
+    label.textAlignment = NSTextAlignmentLeft;
     label.textVerticalAlignment = YYTextVerticalAlignmentCenter;
     label.numberOfLines = 0;
     label.backgroundColor = [UIColor colorWithWhite:0.933 alpha:1.000];
@@ -261,15 +276,16 @@
 }
 
 - (void)showMessage:(NSString *)msg {
-    CGFloat padding = 10;
+    CGFloat padding = 30;
     
     YYLabel *label = [YYLabel new];
+    label.origin = CGPointMake(10, 10);
     label.text = msg;
     label.font = [UIFont systemFontOfSize:16];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor whiteColor];
     label.backgroundColor = [UIColor colorWithRed:0.033 green:0.685 blue:0.978 alpha:0.730];
-    label.width = self.view.width;
+    label.width = self.view.width-20;
     label.textContainerInset = UIEdgeInsetsMake(padding, padding, padding, padding);
     label.height = [msg heightForFont:label.font width:label.width] + 2 * padding;
     

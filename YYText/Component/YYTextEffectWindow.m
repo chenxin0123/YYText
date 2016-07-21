@@ -16,7 +16,7 @@
 
 
 @implementation YYTextEffectWindow
-
+///!
 + (instancetype)sharedWindow {
     static YYTextEffectWindow *one = nil;
     if (one == nil) {
@@ -47,11 +47,11 @@
     return one;
 }
 
-// stop self from becoming the KeyWindow
+//! stop self from becoming the KeyWindow
 - (void)becomeKeyWindow {
     [[YYTextSharedApplication().delegate window] makeKeyWindow];
 }
-
+///!
 - (UIViewController *)rootViewController {
     for (UIWindow *window in [YYTextSharedApplication() windows]) {
         if (self == window) continue;
@@ -67,7 +67,7 @@
     return viewController;
 }
 
-// Bring self to front
+// Bring self to front!
 - (void)_updateWindowLevel {
     UIApplication *app = YYTextSharedApplication();
     if (!app) return;
@@ -78,7 +78,7 @@
     if (top == self) return;
     self.windowLevel = top.windowLevel + 1;
 }
-
+///!
 - (YYTextDirection)_keyboardDirection {
     CGRect keyboardFrame = [YYTextKeyboardManager defaultManager].keyboardFrame;
     keyboardFrame = [[YYTextKeyboardManager defaultManager] convertRect:keyboardFrame toView:self];
@@ -106,7 +106,7 @@
     
     return YYTextDirectionNone;
 }
-
+///!
 - (CGPoint)_correctedCaptureCenter:(CGPoint)center{
     CGRect keyboardFrame = [YYTextKeyboardManager defaultManager].keyboardFrame;
     keyboardFrame = [[YYTextKeyboardManager defaultManager] convertRect:keyboardFrame toView:self];
@@ -130,7 +130,7 @@
     }
     return center;
 }
-
+///!
 - (CGPoint)_correctedCenter:(CGPoint)center forMagnifier:(YYTextMagnifier *)mag rotation:(CGFloat)rotation {
     CGFloat degree = YYTextRadiansToDegrees(rotation);
     
@@ -218,7 +218,7 @@
     return center;
 }
 
-/**
+/**!
  Capture screen snapshot and set it to magnifier.
  @return Magnifier rotation radius.
  */
@@ -297,7 +297,7 @@
     mag.captureFadeAnimation = NO;
     return rotation;
 }
-
+///!
 - (void)showMagnifier:(YYTextMagnifier *)mag {
     if (!mag) return;
     if (mag.superview != self) [self addSubview:mag];
@@ -328,7 +328,7 @@
         
     }];
 }
-
+///!
 - (void)moveMagnifier:(YYTextMagnifier *)mag {
     if (!mag) return;
     [self _updateWindowLevel];
@@ -345,7 +345,7 @@
     }
     mag.transform = CGAffineTransformMakeRotation(rotation);
 }
-
+///!
 - (void)hideMagnifier:(YYTextMagnifier *)mag {
     if (!mag) return;
     if (mag.superview != self) return;
@@ -377,7 +377,7 @@
         }
     }];
 }
-
+///!
 - (void)_updateSelectionGrabberDot:(YYSelectionGrabberDot *)dot selection:(YYTextSelectionView *)selection{
     dot.mirror.hidden = YES;
     if (selection.hostView.clipsToBounds == YES && dot.yy_visibleAlpha > 0.1) {
@@ -410,7 +410,7 @@
         dot.mirror.center = center;
     }
 }
-
+///!
 - (void)showSelectionDot:(YYTextSelectionView *)selection {
     if (!selection) return;
     [self _updateWindowLevel];
@@ -419,7 +419,7 @@
     [self _updateSelectionGrabberDot:selection.startGrabber.dot selection:selection];
     [self _updateSelectionGrabberDot:selection.endGrabber.dot selection:selection];
 }
-
+///!
 - (void)hideSelectionDot:(YYTextSelectionView *)selection {
     if (!selection) return;
     [selection.startGrabber.dot.mirror removeFromSuperview];

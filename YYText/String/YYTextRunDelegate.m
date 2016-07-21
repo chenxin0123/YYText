@@ -10,6 +10,8 @@
 //
 
 #import "YYTextRunDelegate.h"
+
+///CTFramesetterCreateWithAttributedString将会调用下列方法
 //!
 static void DeallocCallback(void *ref) {
     ///__bridge_transfer将一个被__bridge_retain的C指针转换为arc管理的对象

@@ -417,6 +417,7 @@ static inline CGPoint YYTextCGPointPixelFloor(CGPoint point) {
 /// round point value for pixel-aligned!
 static inline CGPoint YYTextCGPointPixelRound(CGPoint point) {
     CGFloat scale = YYTextScreenScale();
+    //3.4*3 = 10.2 = 10 10/3 = 3.3
     return CGPointMake(round(point.x * scale) / scale,
                        round(point.y * scale) / scale);
 }

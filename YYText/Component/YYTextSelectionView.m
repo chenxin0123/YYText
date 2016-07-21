@@ -21,7 +21,7 @@
 #define kTouchTestExtend 14.0
 #define kTouchDotExtend 7.0
 
-
+///!
 @implementation YYSelectionGrabberDot
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -48,7 +48,7 @@
 @end
 
 
-
+///!
 @implementation YYSelectionGrabber
 
 - (instancetype) initWithFrame:(CGRect)frame {
@@ -122,6 +122,7 @@
 
 @implementation YYTextSelectionView
 
+///!
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (!self) return nil;
@@ -144,11 +145,11 @@
     
     return self;
 }
-
+///!
 - (void)dealloc {
     [_caretTimer invalidate];
 }
-
+///!
 - (void)setColor:(UIColor *)color {
     _color = color;
     self.caretView.backgroundColor = color;
@@ -159,6 +160,7 @@
     }];
 }
 
+///!
 - (void)setCaretBlinks:(BOOL)caretBlinks {
     if (_caretBlinks != caretBlinks) {
         _caretView.alpha = 1;
@@ -172,7 +174,7 @@
         _caretBlinks = caretBlinks;
     }
 }
-
+///!
 - (void)_startBlinks {
     [_caretTimer invalidate];
     if (_caretVisible) {
@@ -182,14 +184,14 @@
         _caretView.alpha = 1;
     }
 }
-
+///!
 - (void)_doBlink {
     [UIView animateWithDuration:kBlinkFadeDuration delay:0 options:UIViewAnimationOptionCurveEaseInOut animations: ^{
         if (_caretView.alpha == 1) _caretView.alpha = 0;
         else _caretView.alpha = 1;
     } completion:NULL];
 }
-
+///!
 - (void)setCaretVisible:(BOOL)caretVisible {
     _caretVisible = caretVisible;
     self.caretView.hidden = !caretVisible;
@@ -199,7 +201,7 @@
         [self performSelector:@selector(_startBlinks) withObject:nil afterDelay:kBlinkFirstDelay];
     }
 }
-
+//~!
 - (void)setVerticalForm:(BOOL)verticalForm {
     if (_verticalForm != verticalForm) {
         _verticalForm = verticalForm;
@@ -240,13 +242,14 @@
     return caretRect;
 }
 
+///!
 - (void)setCaretRect:(CGRect)caretRect {
     _caretRect = caretRect;
     self.caretView.frame = [self _standardCaretRect:caretRect];
     CGFloat minWidth = MIN(self.caretView.bounds.size.width, self.caretView.bounds.size.height);
     self.caretView.layer.cornerRadius = minWidth / 2;
 }
-
+///!
 - (void)setSelectionRects:(NSArray *)selectionRects {
     _selectionRects = selectionRects.copy;
     [self.markViews enumerateObjectsUsingBlock: ^(UIView *v, NSUInteger idx, BOOL *stop) {
@@ -281,11 +284,11 @@
         }
     }];
 }
-
+///!
 - (BOOL)isGrabberContainsPoint:(CGPoint)point {
     return [self isStartGrabberContainsPoint:point] || [self isEndGrabberContainsPoint:point];
 }
-
+///!
 - (BOOL)isStartGrabberContainsPoint:(CGPoint)point {
     if (_startGrabber.hidden) return NO;
     CGRect startRect = [_startGrabber touchRect];
@@ -297,7 +300,7 @@
     }
     return CGRectContainsPoint(startRect, point);
 }
-
+///!
 - (BOOL)isEndGrabberContainsPoint:(CGPoint)point {
     if (_endGrabber.hidden) return NO;
     CGRect startRect = [_startGrabber touchRect];
@@ -309,7 +312,7 @@
     }
     return CGRectContainsPoint(endRect, point);
 }
-
+///!
 - (BOOL)isCaretContainsPoint:(CGPoint)point {
     if (_caretVisible) {
         CGRect rect = CGRectInset(_caretRect, -kTouchTestExtend, -kTouchTestExtend);
@@ -317,7 +320,7 @@
     }
     return NO;
 }
-
+///!
 - (BOOL)isSelectionRectsContainsPoint:(CGPoint)point {
     if (_selectionRects.count == 0) return NO;
     for (YYTextSelectionRect *rect in _selectionRects) {

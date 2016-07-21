@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextSelectionView.h
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -21,7 +21,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
+/**!
  A single dot view. The frame should be foursquare.
  Change the background color for display.
  
@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-/**
+/**!
  A grabber (stick with a dot).
  
  @discussion Typically, you should not use this class directly.

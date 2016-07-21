@@ -42,6 +42,7 @@
             if (CTLineGetGlyphCount(_CTLine) > 0) {
                 CFArrayRef runs = CTLineGetGlyphRuns(_CTLine);
                 CTRunRef run = CFArrayGetValueAtIndex(runs, 0);
+                //第一个字形的位置
                 CGPoint pos;
                 CTRunGetPositions(run, CFRangeMake(0, 1), &pos);
                 _firstGlyphPos = pos.x;
@@ -79,21 +80,31 @@
     NSUInteger runCount = CFArrayGetCount(runs);
     if (runCount == 0) return;
     
+    //YYTextAttachment
     NSMutableArray *attachments = [NSMutableArray new];
+    //NSValue-NSRange 占位符的range
     NSMutableArray *attachmentRanges = [NSMutableArray new];
+    //YYTextAttachment所占的大小
     NSMutableArray *attachmentRects = [NSMutableArray new];
+    ///遍历取出CTLine中的YYTextAttachment属性
     for (NSUInteger r = 0; r < runCount; r++) {
         CTRunRef run = CFArrayGetValueAtIndex(runs, r);
+        //字形数量
         CFIndex glyphCount = CTRunGetGlyphCount(run);
         if (glyphCount == 0) continue;
+        //属性
         NSDictionary *attrs = (id)CTRunGetAttributes(run);
+        
+        //图片或View
         YYTextAttachment *attachment = attrs[YYTextAttachmentAttributeName];
         if (attachment) {
             CGPoint runPosition = CGPointZero;
+            //CTRun位置
             CTRunGetPositions(run, CFRangeMake(0, 1), &runPosition);
             
             CGFloat ascent, descent, leading, runWidth;
             CGRect runTypoBounds;
+            //CTRun的宽度
             runWidth = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, &leading);
             
             if (_vertical) {
@@ -101,11 +112,13 @@
                 runPosition.y = _position.y + runPosition.y;
                 runTypoBounds = CGRectMake(_position.x + runPosition.x - descent, runPosition.y , ascent + descent, runWidth);
             } else {
+                //_position 0 22 runPosition 202 0 ascent 21.6 descent 10 runWidth 32
+                //runPosition表示baseline相对于本CTLine的位置
                 runPosition.x += _position.x;
-                runPosition.y = _position.y - runPosition.y;
+                runPosition.y = _position.y - runPosition.y;//???
                 runTypoBounds = CGRectMake(runPosition.x, runPosition.y - ascent, runWidth, ascent + descent);
             }
-            
+            //占位符的range
             NSRange runRange = YYTextNSRangeFromCFRange(CTRunGetStringRange(run));
             [attachments addObject:attachment];
             [attachmentRanges addObject:[NSValue valueWithRange:runRange]];

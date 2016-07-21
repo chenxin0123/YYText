@@ -12,11 +12,12 @@
 #import "YYTextContainerView.h"
 
 @implementation YYTextContainerView {
-    BOOL _attachmentChanged;
+    BOOL _attachmentChanged;///when set layout
     NSMutableArray *_attachmentViews;
     NSMutableArray *_attachmentLayers;
 }
 
+///!
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (!self) return nil;
@@ -25,7 +26,7 @@
     _attachmentLayers = [NSMutableArray array];
     return self;
 }
-
+///!
 - (void)setDebugOption:(YYTextDebugOption *)debugOption {
     BOOL needDraw = _debugOption.needDrawDebug;
     _debugOption = debugOption.copy;
@@ -33,13 +34,13 @@
         [self setNeedsDisplay];
     }
 }
-
+///!
 - (void)setTextVerticalAlignment:(YYTextVerticalAlignment)textVerticalAlignment {
     if (_textVerticalAlignment == textVerticalAlignment) return;
     _textVerticalAlignment = textVerticalAlignment;
     [self setNeedsDisplay];
 }
-
+///!
 - (void)setContentsFadeDuration:(NSTimeInterval)contentsFadeDuration {
     if (_contentsFadeDuration == contentsFadeDuration) return;
     _contentsFadeDuration = contentsFadeDuration;
@@ -47,19 +48,19 @@
         [self.layer removeAnimationForKey:@"contents"];
     }
 }
-
+///!
 - (void)setLayout:(YYTextLayout *)layout {
     if (_layout == layout) return;
     _layout = layout;
     _attachmentChanged = YES;
     [self setNeedsDisplay];
 }
-
+///!
 - (void)setLayout:(YYTextLayout *)layout withFadeDuration:(NSTimeInterval)fadeDuration {
     self.contentsFadeDuration = fadeDuration;
     self.layout = layout;
 }
-
+///!
 - (void)drawRect:(CGRect)rect {
     // fade content
     [self.layer removeAnimationForKey:@"contents"];
@@ -110,7 +111,7 @@
         }
     }
 }
-
+///!
 - (void)setFrame:(CGRect)frame {
     CGSize oldSize = self.bounds.size;
     [super setFrame:frame];
@@ -118,7 +119,7 @@
         [self setNeedsLayout];
     }
 }
-
+///!
 - (void)setBounds:(CGRect)bounds {
     CGSize oldSize = self.bounds.size;
     [super setBounds:bounds];
@@ -127,7 +128,7 @@
     }
 }
 
-#pragma mark - UIResponder forward
+#pragma mark - UIResponder forward !
 
 - (BOOL)canBecomeFirstResponder {
     return YES;

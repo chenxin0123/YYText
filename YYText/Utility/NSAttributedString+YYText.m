@@ -538,7 +538,7 @@ return style. _attr_;
     NSMutableString *result = [NSMutableString string];
     if (range.length == 0) return result;
     NSString *string = self.string;
-    //遍历所以属性 以含或不含YYTextBackedStringAttributeName来分块
+    //遍历所有属性 以含或不含YYTextBackedStringAttributeName来分块
     [self enumerateAttribute:YYTextBackedStringAttributeName inRange:range options:kNilOptions usingBlock:^(id value, NSRange range, BOOL *stop) {
         YYTextBackedString *backed = value;
         if (backed && backed.string) {
@@ -627,6 +627,7 @@ return style. _attr_;
     return atr;
 }
 
+///添加CTRunDelegateRef以及attachment
 + (NSMutableAttributedString *)yy_attachmentStringWithEmojiImage:(UIImage *)image
                                                         fontSize:(CGFloat)fontSize {
     if (!image || fontSize <= 0) return nil;

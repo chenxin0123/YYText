@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextParser.m
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -322,6 +322,7 @@ dispatch_semaphore_signal(_lock);
     LOCK(NSDictionary *mapper = _mapper); return mapper;
 }
 
+///设置表情图片与字符串的映射关系
 - (void)setEmoticonMapper:(NSDictionary *)emoticonMapper {
     LOCK(
          _mapper = emoticonMapper.copy;
@@ -387,7 +388,7 @@ dispatch_semaphore_signal(_lock);
     NSRegularExpression *regex;
     LOCK(mapper = _mapper; regex = _regex;);
     if (mapper.count == 0 || regex == nil) return NO;
-    
+    //所有匹配 NSTextCheckingResult数组
     NSArray *matches = [regex matchesInString:text.string options:kNilOptions range:NSMakeRange(0, text.length)];
     if (matches.count == 0) return NO;
     
@@ -402,15 +403,19 @@ dispatch_semaphore_signal(_lock);
         UIImage *emoticon = mapper[subStr];
         if (!emoticon) continue;
         
+        //字体大小
         CGFloat fontSize = 12; // CoreText default value
         CTFontRef font = (__bridge CTFontRef)([text yy_attribute:NSFontAttributeName atIndex:oneRange.location]);
         if (font) fontSize = CTFontGetSize(font);
+        
         NSMutableAttributedString *atr = [NSAttributedString yy_attachmentStringWithEmojiImage:emoticon fontSize:fontSize];
+        
         [atr yy_setTextBackedString:[YYTextBackedString stringWithString:subStr] range:NSMakeRange(0, atr.length)];
         [text replaceCharactersInRange:oneRange withString:atr.string];
         [text yy_removeDiscontinuousAttributesInRange:NSMakeRange(oneRange.location, atr.length)];
         [text addAttributes:atr.yy_attributes range:NSMakeRange(oneRange.location, atr.length)];
         selectedRange = [self _replaceTextInRange:oneRange withLength:atr.length selectedRange:selectedRange];
+        ///本来是有oneRange.length 变成只有1个长度 所有要剪掉oneRange.length - 1
         cutLength += oneRange.length - 1;
     }
     if (range) *range = selectedRange;

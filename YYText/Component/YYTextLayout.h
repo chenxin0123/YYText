@@ -1,4 +1,4 @@
-//
+//!
 //  YYTextLayout.h
 //  YYText <https://github.com/ibireme/YYText>
 //
@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 extern const CGSize YYTextContainerMaxSize;
 
-/**
+/**！
  The YYTextContainer class defines a region in which text is laid out.
  YYTextLayout class uses one or more YYTextContainer objects to generate layouts.
  
@@ -122,9 +122,10 @@ extern const CGSize YYTextContainerMaxSize;
 @end
 
 
-/**
+/**!
  A simple implementation of `YYTextLinePositionModifier`. It can fix each line's position
  to a specified value, lets each line of height be the same.
+ 修改每个YYTextLine的position.y
  */
 @interface YYTextLinePositionSimpleModifier : NSObject <YYTextLinePositionModifier>
 @property (assign) CGFloat fixedLineHeight; ///< The fixed line height (distance between two baseline).
@@ -326,9 +327,9 @@ extern const CGSize YYTextContainerMaxSize;
  @discussion The offset is the text position's baseline point.x.
  If the container is vertical form, the offset is the baseline point.y;
  
- @param position   The text position in string.
+ @param position   The text position in string. The string index corresponding to the desired position.
  @param lineIndex  The line index.
- @return The offset in container, or CGFLOAT_MAX if not found.
+ @return The offset in container, or CGFLOAT_MAX if not found. offset + line.position.x
  */
 - (CGFloat)offsetForTextPosition:(NSUInteger)position lineIndex:(NSUInteger)lineIndex;
 

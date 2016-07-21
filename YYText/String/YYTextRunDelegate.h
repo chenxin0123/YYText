@@ -1,5 +1,5 @@
-//
-//  YYTextRunDelegate.h!
+//!
+//  YYTextRunDelegate.h
 //  YYText <https://github.com/ibireme/YYText>
 //
 //  Created by ibireme on 14/10/14.

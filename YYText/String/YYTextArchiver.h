@@ -1,5 +1,5 @@
-//
-//  YYTextArchiver.h !
+//!
+//  YYTextArchiver.h
 //  YYText <https://github.com/ibireme/YYText>
 //
 //  Created by ibireme on 15/3/16.

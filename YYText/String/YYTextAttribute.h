@@ -239,7 +239,9 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
 /**!
  YYTextBorder objects are used by the NSAttributedString class cluster
  as the values for border attributes (stored in the attributed string under
- the key named YYTextBorderAttributeName or YYTextBackgroundBorderAttributeName).
+ the key named YYTextBorderAttributeName or YYTextBackgroundBorderAttributeName
+ or YYTextBlockBorderAttributeName
+ ).
  
  It can be used to draw a border around a range of text, or draw a background
  to a range of text.

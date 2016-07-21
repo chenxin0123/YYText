@@ -54,8 +54,6 @@
 
 @end
 
-
-
 @implementation YYTextRange {
     YYTextPosition *_start;
     YYTextPosition *_end;

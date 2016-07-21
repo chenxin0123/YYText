@@ -27,6 +27,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
 @implementation _YYTextKeyboardViewFrameObserver {
     __unsafe_unretained UIView *_keyboardView;
 }
+///!
 - (void)addToKeyboardView:(UIView *)keyboardView {
     if (_keyboardView == keyboardView) return;
     if (_keyboardView) {
@@ -39,7 +40,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     }
     objc_setAssociatedObject(keyboardView, &_YYTextKeyboardViewFrameObserverKey, self, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-
+///!
 - (void)removeFrameObserver {
     [_keyboardView removeObserver:self forKeyPath:@"frame"];
     [_keyboardView removeObserver:self forKeyPath:@"center"];
@@ -47,7 +48,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     [_keyboardView removeObserver:self forKeyPath:@"transform"];
     _keyboardView = nil;
 }
-
+///!
 - (void)addFrameObserver {
     if (!_keyboardView) return;
     [_keyboardView addObserver:self forKeyPath:@"frame" options:kNilOptions context:NULL];
@@ -55,16 +56,17 @@ static int _YYTextKeyboardViewFrameObserverKey;
     [_keyboardView addObserver:self forKeyPath:@"bounds" options:kNilOptions context:NULL];
     [_keyboardView addObserver:self forKeyPath:@"transform" options:kNilOptions context:NULL];
 }
-
+///!
 - (void)dealloc {
     [self removeFrameObserver];
 }
 
+///!
 + (instancetype)observerForView:(UIView *)keyboardView {
     if (!keyboardView) return nil;
     return objc_getAssociatedObject(keyboardView, &_YYTextKeyboardViewFrameObserverKey);
 }
-
+///!
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     
     BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
@@ -103,12 +105,12 @@ static int _YYTextKeyboardViewFrameObserverKey;
     
     BOOL _lastIsNotification;
 }
-
+///!
 - (instancetype)init {
     @throw [NSException exceptionWithName:@"YYTextKeyboardManager init error" reason:@"Use 'defaultManager' to get instance." userInfo:nil];
     return [super init];
 }
-
+///!
 - (instancetype)_init {
     self = [super init];
     _observers = [[NSHashTable alloc] initWithOptions:NSPointerFunctionsWeakMemory|NSPointerFunctionsObjectPointerPersonality capacity:0];
@@ -125,7 +127,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     }
     return self;
 }
-
+///!
 - (void)_initFrameObserver {
     UIView *keyboardView = self.keyboardView;
     if (!keyboardView) return;
@@ -139,11 +141,12 @@ static int _YYTextKeyboardViewFrameObserverKey;
         [observer addToKeyboardView:keyboardView];
     }
 }
-
+///!
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+///!
 + (instancetype)defaultManager {
     static YYTextKeyboardManager *mgr = nil;
     static dispatch_once_t onceToken;
@@ -154,23 +157,23 @@ static int _YYTextKeyboardViewFrameObserverKey;
     });
     return mgr;
 }
-
+///!
 + (void)load {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self defaultManager];
     });
 }
-
+///!
 - (void)addObserver:(id<YYTextKeyboardObserver>)observer {
     if (!observer) return;
     [_observers addObject:observer];
 }
-
+///!
 - (void)removeObserver:(id<YYTextKeyboardObserver>)observer {
     if (!observer) return;
     [_observers removeObject:observer];
 }
-
+///!
 - (UIWindow *)keyboardWindow {
     UIApplication *app = YYTextSharedApplication();
     if (!app) return nil;
@@ -209,7 +212,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     }
     return nil;
 }
-
+///!
 - (UIView *)keyboardView {
     UIApplication *app = YYTextSharedApplication();
     if (!app) return nil;
@@ -225,7 +228,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     if (view) return view;
     return nil;
 }
-
+///!
 - (BOOL)isKeyboardVisible {
     UIWindow *window = self.keyboardWindow;
     if (!window) return NO;
@@ -236,7 +239,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     if (CGRectIsInfinite(rect)) return NO;
     return rect.size.width > 0 && rect.size.height > 0;
 }
-
+///!
 - (CGRect)keyboardFrame {
     UIView *keyboard = [self keyboardView];
     if (!keyboard) return CGRectNull;
@@ -252,7 +255,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
 }
 
 #pragma mark - private
-
+///!
 - (double)_systemVersion {
     static double v;
     static dispatch_once_t onceToken;
@@ -261,7 +264,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     });
     return v;
 }
-
+///!
 - (UIView *)_getKeyboardViewFromWindow:(UIWindow *)window {
     /*
      iOS 6/7:
@@ -324,7 +327,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     
     return nil;
 }
-
+///!
 - (void)_keyboardFrameWillChangeNotification:(NSNotification *)notif {
     if (![notif.name isEqualToString:UIKeyboardWillChangeFrameNotification]) return;
     NSDictionary *info = notif.userInfo;
@@ -359,7 +362,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
         [self _notifyAllObservers];
     }
 }
-
+///!
 - (void)_keyboardFrameDidChangeNotification:(NSNotification *)notif {
     if (![notif.name isEqualToString:UIKeyboardDidChangeFrameNotification]) return;
     NSDictionary *info = notif.userInfo;
@@ -383,6 +386,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     [self performSelector:@selector(_notifyAllObservers) withObject:nil afterDelay:0 inModes:@[NSRunLoopCommonModes]];
 }
 
+///observer's block call this method !
 - (void)_keyboardFrameChanged:(UIView *)keyboard {
     if (keyboard != self.keyboardView) return;
     
@@ -398,7 +402,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(_notifyAllObservers) object:nil];
     [self performSelector:@selector(_notifyAllObservers) withObject:nil afterDelay:0 inModes:@[NSRunLoopCommonModes]];
 }
-
+///!
 - (void)_notifyAllObservers {
     UIApplication *app = YYTextSharedApplication();
     if (!app) return;
@@ -485,7 +489,7 @@ static int _YYTextKeyboardViewFrameObserverKey;
     _fromVisible = trans.toVisible;
     _fromOrientation = app.statusBarOrientation;
 }
-
+///!
 - (CGRect)convertRect:(CGRect)rect toView:(UIView *)view {
     UIApplication *app = YYTextSharedApplication();
     if (!app) return CGRectZero;
